@@ -1,3 +1,4 @@
+package com.legend.lib;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,12 +28,14 @@ class Category
 	public int getCategoryID() {
 		return categoryID;
 	}
+	@SuppressWarnings("static-access")
 	public void setCategoryID(int categoryID) {
 		this.categoryID = categoryID;
 	}
 	public String getCategoryName() {
 		return categoryName;
 	}
+	@SuppressWarnings("static-access")
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}

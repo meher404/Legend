@@ -1,5 +1,4 @@
 package com.legend.lib;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,6 +38,7 @@ public class Product {
 		return manufactureID;
 	}
 
+	@SuppressWarnings("static-access")
 	public void setManufactureID(int manufactureID) {
 		this.manufactureID = manufactureID;
 	}
@@ -47,6 +47,7 @@ public class Product {
 		return categoryID;
 	}
 
+	@SuppressWarnings("static-access")
 	public void setCategoryID(int categoryID) {
 		this.categoryID = categoryID;
 	}
@@ -54,6 +55,7 @@ public class Product {
 	public String getPname() {
 		return pName;
 	}
+	@SuppressWarnings("static-access")
 	public void setPname(String pName) {
 
 		this.pName = pName;
@@ -67,36 +69,42 @@ public class Product {
 	public String getImagesrc() {
 		return imagesrc;
 	}
+	@SuppressWarnings("static-access")
 	public void setImagesrc(String imagesrc) {
 		this.imagesrc = imagesrc;
 	}
 	public double getPrice() {
 		return price;
 	}
+	@SuppressWarnings("static-access")
 	public void setPrice(double price) {
 		this.price = price;
 	}
 	public int getQuantity() {
 		return quantity;
 	}
+	@SuppressWarnings("static-access")
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 	public String getDescription() {
 		return description;
 	}
+	@SuppressWarnings("static-access")
 	public void setDescription(String description) {
 		this.description = description;
 	}
 	public int getRating() {
 		return rating;
 	}
+	@SuppressWarnings("static-access")
 	public void setRating(int rating) {
 		this.rating = rating;
 	}
 	public double getDiscount() {
 		return discount;
 	}
+	@SuppressWarnings("static-access")
 	public void setDiscount(double discount) {
 		this.discount = discount;
 	}
@@ -116,13 +124,13 @@ public class Product {
 				name=rs.getString("categoryName");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		c.setCategoryName(name);
 		c.setCategoryID(categoryID);
 		return c;
 	}
+	
 	public Manufacturer getManufacturer(int ManufactureID) throws SQLException{
 		Manufacturer m=new Manufacturer();
 		String name=null,desc=null;
@@ -153,7 +161,7 @@ public class Product {
 
 	static void insertDB() throws SQLException
 	{
-		Product pro=new Product();
+		
 		try {
 			prep = con.prepareStatement("insert into product VALUES(?,?,?,?,?,?,?,?,?,?);");
 			prep.setString(1,pName);
@@ -174,10 +182,9 @@ public class Product {
 	}
 	static void deleteDB() throws SQLException
 	{
-		Product pro= new Product();
 		try {
 			Statement st=conn.createStatement();
-			String s="delete *from product where pid='"+pro.PID+"';";
+			String s="delete *from product where pid='"+PID+"';";
 			st.executeUpdate(s);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

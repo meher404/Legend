@@ -1,3 +1,4 @@
+package com.legend.lib;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -43,7 +44,7 @@ public class DBConnection {
 			String password=pro.getProperty("password");
 			//System.out.println(password);
 			con = DriverManager.getConnection(url,user,password);
-			System.out.println("Connection Established....");
+		//	System.out.println("Connection Established....");
 		} catch(SQLException sqlEx) {
 			sqlEx.printStackTrace();
 		}
