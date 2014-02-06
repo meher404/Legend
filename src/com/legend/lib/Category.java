@@ -8,10 +8,10 @@ import java.sql.Statement;
 class Category
 {
 	DBConnection db=null;
-	ResultSet rs=null;
+	static ResultSet rs=null;
 	ResultSet rs1=null;
 	static Connection con=null;
-	Statement st=null;
+	static Statement st=null;
 	Statement st1=null;
 	static PreparedStatement prep;	
 	public Category() throws SQLException {
@@ -40,14 +40,16 @@ class Category
 		this.categoryName = categoryName;
 	}
 	
-	public int generateCategoryID(String CategoryName){
+	public int generateCategoryID(String CategoryName) throws SQLException{
 		try {
 			rs=st.executeQuery("SELECT categoryName FROM category;");
 			while(rs.next())
 			{
 				String name=rs.getString("categoryName");
-				System.out.println("cat name : "+name);
-				if(CategoryName.equals(name)){
+				String name1=name.toLowerCase();
+		//		System.out.println("cat name : "+name);
+				String CategoryName1=CategoryName.toLowerCase();
+				if(CategoryName1.equals(name1)){
 					rs1=st1.executeQuery("SELECT categoryID FROM category where categoryName='"+CategoryName+"';");
 					System.out.println("category name exists");
 					if(rs1.next())
@@ -56,13 +58,23 @@ class Category
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		for (int i = 0; i < 2; i++) {
 			categoryID=categoryID+(int)CategoryName.charAt(i);
 			
 		}
+		categoryID=categoryID+1000+CategoryName.length();
+		st = con.createStatement();
+		rs1=st.executeQuery("SELECT categoryID FROM category;");
+		while(rs1.next()){
+			int temp=rs1.getInt("categoryID");
+			if(temp==categoryID){
+				categoryID=categoryID+1;
+			}
+		}
+		setCategoryName(CategoryName);
+		setCategoryID(categoryID);
 		insert();
 		return categoryID;
 	}
@@ -71,6 +83,7 @@ class Category
 	public static void  insert()
 	{
 		try {
+			st=con.createStatement();
 			prep = con.prepareStatement("insert into Category VALUES(?,?);");
 			prep.setInt(1,categoryID);
 			prep.setString(2,categoryName);
