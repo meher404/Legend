@@ -20,7 +20,6 @@ public class Address {
 		db=new DBConnection();
 		con=db.getConnection();
 		st = con.createStatement();
-		st1=con.createStatement();
 	}
 	
 	private static int addressID;
@@ -69,7 +68,7 @@ public class Address {
 	
 	public int generateAddressId(long pin){
 		int addid;
-		addid=(int) (1000+(pin/10));
+		addid=(int) (((pin+Math.random()*1000)));
 		try {
 			rs=st.executeQuery("select addressID from address");
 			while(rs.next()){

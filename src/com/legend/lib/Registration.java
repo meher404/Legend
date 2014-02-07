@@ -33,7 +33,7 @@ public class Registration {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@SuppressWarnings("static-access")
 	public static void generateCode(String userId,String email){
 		Mailer mail=new Mailer();
@@ -56,18 +56,22 @@ public class Registration {
 		String msg="Congratulations.. You have succesfully registered with Legend"+"\n"+"Enter this confirmation code to validate your account"+"\n"+"Code : "+randomNum+"";
 		msg=msg+"\n\t\t\t"+"Legend-The new way to shop"+"\n\t\t\t"+"A project of Chanakya Group";
 		System.out.println(msg);
-		mail.send(email, subject, msg);
+		//	mail.send(email, subject, msg);
 	}
-	
-	public static boolean validateAccount(String userId,int code){
+
+	public static boolean validateAccount(String email,int code){
 		try{
 			int number=0;
-			rs=st.executeQuery("select tempCode from registration where userID='"+userId+"';");
-			if(rs.next()){
-				number=rs.getInt("tempCode");
-				if(number==code){
-					stmt.executeUpdate("update registration set status=\"active\" where userID='"+userId+"';");
-					return true;
+			rs1=stmt.executeQuery("select userId from user where email='"+email+"';");
+			if(rs1.next()){
+				String userId=rs1.getString("userId");
+				rs=st.executeQuery("select tempCode from registration where userID='"+userId+"';");
+				if(rs.next()){
+					number=rs.getInt("tempCode");
+					if(number==code){
+						stmt2.executeUpdate("update registration set status=\"active\" where userID='"+userId+"';");
+						return true;
+					}
 				}
 			}
 		}catch(Exception e){

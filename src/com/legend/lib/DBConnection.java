@@ -15,7 +15,7 @@ public class DBConnection {
 			Properties pro=new Properties();			
 			FileInputStream fi = null;
 			try {
-				fi = new FileInputStream("F:\\WebProgramming\\WorkSpace\\Prac\\WebContent\\jdbc.properties");
+				fi = new FileInputStream("C:\\Users\\singam1\\git\\Legend\\jdbc.properties");
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -44,7 +44,7 @@ public class DBConnection {
 			String password=pro.getProperty("password");
 			//System.out.println(password);
 			con = DriverManager.getConnection(url,user,password);
-		//	System.out.println("Connection Established....");
+			System.out.println("Connection Established....");
 		} catch(SQLException sqlEx) {
 			sqlEx.printStackTrace();
 		}

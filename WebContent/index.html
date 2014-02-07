@@ -376,7 +376,7 @@
    
 	<!--******************** Register Section ******************** -->
     <section id="contact" class="single-page scrollblock">
-      <div class="container"> 
+      <div class="container" id="reg_login"> 
         <div class="align"><i class="icon-group-circled"></i></div>
        
 		<h1 id="register_title">Register</h1>
@@ -386,7 +386,7 @@
             <div class="cform" id="theme-form">
               
                 <span id="pd">Personal Details:</span> 
-				<form id="register-form" action="#" method="post" class="cform-form">
+				<form id="register-form" action="/Legend/RegisterServlet" method="post" class="cform-form">
 				<div class="row">
 				
                   <div class="span4"> <span class="your-name">
@@ -442,7 +442,7 @@
                 </div>
                 
                 <div>
-                  <center><input type="submit" value="Register" class="cform-submit"></center>
+                  <center><input type="submit" id="register-submit" value="Register" class="btn btn-large"></center>
                 </div>
                 <div class="cform-response-output"></div>
               </form>
@@ -452,7 +452,40 @@
         </div>
        
       </div>
-      
+      <div id="resp_act" style="display:none">
+<div class="container"> 
+        <div class="align"><i class="icon-group-circled"></i></div>
+       
+		<h1 id="register_title">Register</h1>
+		
+        <div class="row">
+          <div class="span12"> 
+            <div class="cform" id="theme-form">
+                
+				<form id="register-activate" action="Activate" method="post" class="cform-form">
+					<div class="row">				
+						<div align="center"><h1>Thank You for your Registeration.</h1></div>
+						<div align="center">An <b><u>ACTIVATION CODE</u></b> has been sent to your email ID: <span id="act_eid"></span> Kindly enter the code to confirm your activation.</div>
+					</div>
+					<p></p>
+					<div class="row">
+						<div class="span4"></div>
+						<div class="span4"><span class="your-name">
+							<input type="text" name="verfCode" id="verfCode" placeholder="Verification Code" class="cform-text" size="40" title="Verification code sent to email" />
+						</span></div>
+					</div>
+                
+				
+                   <center><input type="submit" value="Activate" class="cform-submit"></center>
+                  <div class="cform-response-output"></div>
+                </form>
+            </div>
+          </div>
+          
+        </div>
+       
+      </div>
+</div>
     </section> 
    
 	<hr>
@@ -501,9 +534,9 @@
 				location.reload();
 				check_sign=true;
 			}
-		}
-		
+		};
 	</script>
+
 	<!-- <script type="text/javascript" src="js/lightbox-2.6.min.js"></script> -->
     
    

@@ -14,5 +14,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/singam1/workspace/mail.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.50/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.50/lib/mysql-connector-java-5.1.28-bin.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

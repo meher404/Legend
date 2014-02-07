@@ -15,6 +15,7 @@ public class helpFunctions {
 	static Connection conn = null;
 	static Statement stmt = null;
 	static ResultSet rs=null;
+	static ResultSet rs1=null;
 	static PreparedStatement prep;	
 
 	public helpFunctions(){
@@ -22,21 +23,27 @@ public class helpFunctions {
 			db=new DBConnection();
 			con=db.getConnection();
 			st = con.createStatement();
+			stmt=con.createStatement();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public static boolean Login(String email,String pwd){
-		String encryptedPwd;
+		String encryptedPwd,status = "";
 		CaesarCipher cd=new CaesarCipher();
 		encryptedPwd=cd.encrypt(pwd,2);
 		try {
-			rs=st.executeQuery("select email,password from user;");
+			rs=st.executeQuery("select email,password,userid from user;");
 			while(rs.next()){
 				String mail=rs.getString("email");
 				String passwrd=rs.getString("password");
-				if(mail.equals(email) && encryptedPwd.equals(passwrd)){
+				String uid=rs.getString("userid");
+				rs1=stmt.executeQuery("select status from registration where userid='"+uid+"';");
+				if(rs1.next()){
+					status=rs1.getString("status");
+				}
+				if(mail.equals(email) && encryptedPwd.equals(passwrd)&& status.equals("active")){
 					return true;
 				}
 			}
@@ -80,6 +87,41 @@ public class helpFunctions {
 			e.printStackTrace();
 		}
 		return true;
+	}
+	
+	public static boolean checkStatus(String email){
+		String status="";
+		try {
+			st=con.createStatement();
+			rs=st.executeQuery("select userid from user where email='"+email+"';");
+			while(rs.next()){
+				String uid=rs.getString("userid");
+				stmt=con.createStatement();
+				rs1=stmt.executeQuery("select status from registration where userid='"+uid+"';");
+				if(rs1.next()){
+					status=rs1.getString("status");
+				}
+				if(status.equals("active")){
+					return true;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	
+	public static boolean checkExistingEmail(String email) throws SQLException{
+		st=con.createStatement();
+		rs=st.executeQuery("select email from user");
+		while(rs.next()){
+			String mail=rs.getString("email");
+			if(mail.equals(email)){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public static String generateSaleid(){

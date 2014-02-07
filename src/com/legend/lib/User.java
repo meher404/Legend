@@ -70,7 +70,7 @@ public class User {
 		this.email = email;
 	}
 
-	public String getPwd() {
+	public static String getPwd() {
 		return pwd;
 	}
 
@@ -136,9 +136,10 @@ public class User {
 	}
 
 	@SuppressWarnings("static-access")
-	static void insertUser(){
+	public static void insertUser(){
 		try {
-			String encpwd= encryptPwd(pwd);
+			System.out.println(getPwd());
+			String encpwd= encryptPwd(getPwd());
 			prep = con.prepareStatement("insert into user VALUES(?,?,?,?,?,?,?,?);");
 			prep.setString(1,name);
 			prep.setString(2, userID);
@@ -155,9 +156,11 @@ public class User {
 			e.printStackTrace();
 		} 
 	}
+	
+	
 
 	@SuppressWarnings("static-access")
-	static Cart getCart(){
+	public static Cart getCart(){
 		Cart c=new Cart();
 		String proId = "";
 		int quan=0;
@@ -178,7 +181,7 @@ public class User {
 
 	}
 
-	static void deleteUser(){
+	public static void deleteUser(){
 		try {
 			Statement st=conn.createStatement();
 			String s="delete *from user where pid='"+userID+"';";
@@ -222,7 +225,7 @@ public class User {
 	}
 
 	@SuppressWarnings({ "rawtypes", "static-access" })
-	static ArrayList getOrders(String userid) throws SQLException{
+	public static ArrayList getOrders(String userid) throws SQLException{
 		ArrayList<OrderDetails> od=new ArrayList<OrderDetails>();
 
 		rs=st.executeQuery("select * from orderdetails where userid='"+userid+"';");
@@ -260,7 +263,7 @@ public class User {
 	}
 
 	@SuppressWarnings({ "static-access", "rawtypes" })
-	static ArrayList getBills(String userid) throws SQLException{
+	public static ArrayList getBills(String userid) throws SQLException{
 		ArrayList<Bills> bills=new ArrayList<Bills>();
 		Vector<String> v=new Vector<String>();
 		rs1=stmt.executeQuery("select saleid from orderdetails where userid='"+userid+"';");
