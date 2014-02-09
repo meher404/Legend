@@ -27,6 +27,8 @@ public class Product {
 	private static int rating;
 	private static double discount;
 	private static int categoryID;
+	private Category cat=new Category();
+	private Manufacturer man=new Manufacturer();
 	public Product() throws SQLException{
 
 		db=new DBConnection();
@@ -109,9 +111,7 @@ public class Product {
 		this.discount = discount;
 	}
 
-	public void setCategory(Category c){
-	}
-
+	
 
 
 	public Category getCategory(int categoryID) throws SQLException{

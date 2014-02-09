@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Vector;
 
 
@@ -159,25 +160,34 @@ public class User {
 	
 	
 
-	@SuppressWarnings("static-access")
-	public static Cart getCart(){
+	@SuppressWarnings({ "static-access", "unchecked" })
+	public static HashMap<Product, Integer> getCart(){
+		ArrayList<Product> pro=new ArrayList<Product>();
+		int i=0;
+		HashMap<Product, Integer> hash=new HashMap<Product, Integer>();
 		Cart c=new Cart();
 		String proId = "";
 		int quan=0;
 		try {
 			rs=st.executeQuery("select * from Cart where userID='"+userID+"';");
-			if(rs.next())
+			while(rs.next())
 			{
 				proId=rs.getString("pid");
 				quan=rs.getInt("quantity");
+				Product p=new Product();
+				p=pro.get(i);
+				hash.put(p,quan);
+				i++;
 			}
+			pro=c.getProducts(userID);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		c.setProducts(pro);
 		c.setPid(proId);
 		c.setUid(userID);
 		c.setQuantity(quan);
-		return c;
+		return hash;
 
 	}
 
