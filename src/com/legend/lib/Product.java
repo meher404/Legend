@@ -1,4 +1,6 @@
 package com.legend.lib;
+
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,6 +31,7 @@ public class Product {
 	private static int categoryID;
 	private Category cat=new Category();
 	private Manufacturer man=new Manufacturer();
+	
 	public Product() throws SQLException{
 
 		db=new DBConnection();
@@ -159,6 +162,25 @@ public class Product {
 
 	}
 
+    @Override
+    public int hashCode() {
+        return PID.hashCode();
+    }
+    
+    public boolean equals(final Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        final Product other = (Product) obj;
+        if(this.getPID().equals(other.getPID()))
+    	   return true;
+        else
+        	return false;
+    }
+	
 	static void insertDB() throws SQLException
 	{
 		
@@ -195,7 +217,26 @@ public class Product {
 
 	}
 
-
+	public String toString(){
+		String prod;
+		try {
+			prod = "<div class=\"span4\">"+
+					"<div class=\"mask2\" onclick=\"unHide('"+PID+"')\"><img src=\""+imagesrc+"\" alt=\"\"></a></div>"+
+					"<div class=\"inside\" id=\""+PID+"\" name=\""+PID+"\">"+
+					"<hgroup><h4>"+pName+"</h4></hgroup>"+
+					"<div class=\"entry-content\">"+
+					"<table class=\"table\">"+
+					"<tr><td>Name: </td><td>"+pName+"</td></tr>"+
+					"<tr><td>Price: </td><td>"+price+"</td></tr>"+
+					"<tr><td>Category: </td><td>"+getCategory(categoryID).getCategoryName()+"</td></tr>"+
+					"</table>"+
+					"<a class=\"more-link\" onclick=\"unHide('"+PID+"')\">ADD TO CART</a> </div>"+
+					"</div></div>";
+		} catch (SQLException e) {
+			return "Product failed to load";
+		}
+		return prod;
+	}
 
 }
 

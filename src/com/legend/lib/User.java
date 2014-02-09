@@ -191,6 +191,10 @@ public class User {
 
 	}
 
+	private void hash() {
+		
+	}
+	
 	public static void deleteUser(){
 		try {
 			Statement st=conn.createStatement();

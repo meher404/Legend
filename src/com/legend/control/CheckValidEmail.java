@@ -33,9 +33,11 @@ public class CheckValidEmail extends HttpServlet {
 		try {
 			if(help.checkExistingEmail(email)){
 				System.out.println("email exists");
+				out.println("Valid");
 			}
 			else{
 				System.out.println("email doesn't exist");
+				out.println("Invalid");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
