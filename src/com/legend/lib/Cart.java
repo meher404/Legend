@@ -20,6 +20,40 @@ public class Cart {
 	static PreparedStatement prep;	
 
 	public Cart(){
+	
+	}
+
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
+	public String getPid() {
+		return pid;
+	}
+
+	public void setPid(String pid) {
+		this.pid = pid;
+	}
+
+	private int quantity;
+	private String uid;
+	private String pid;
+	private ArrayList<Product> pids;
+	
+	
+	public ArrayList<Product> getProducts() {
+		return pids;
+	}
+
+	public void setProducts(ArrayList<Product> pids) {
+		this.pids = pids;
+	}
+
+	boolean insertCart(Product p){
 		try {
 			db=new DBConnection();
 			con=db.getConnection();
@@ -27,39 +61,6 @@ public class Cart {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public static String getUid() {
-		return uid;
-	}
-
-	public static void setUid(String uid) {
-		Cart.uid = uid;
-	}
-
-	public static String getPid() {
-		return pid;
-	}
-
-	public static void setPid(String pid) {
-		Cart.pid = pid;
-	}
-
-	private static int quantity;
-	private static String uid;
-	private static String pid;
-	private static ArrayList<Product> pids;
-	
-	
-	public static ArrayList<Product> getProducts() {
-		return pids;
-	}
-
-	public static void setProducts(ArrayList<Product> pids) {
-		Cart.pids = pids;
-	}
-
-	static boolean insertCart(Product p){
 		try {
 			boolean validate;
 			pid=p.getPID();
@@ -78,7 +79,14 @@ public class Cart {
 		return true;
 	}
 
-	static boolean updateCart(int number) throws SQLException{
+	boolean updateCart(int number) throws SQLException{
+		try {
+			db=new DBConnection();
+			con=db.getConnection();
+			st = con.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		boolean validate=helpFunctions.CheckProductQuantity(getPid(), number);
 		if(!validate){
 			return false;
@@ -90,15 +98,22 @@ public class Cart {
 		return true;
 	}
 
-	public static int getQuantity() {
+	public int getQuantity() {
 		return quantity;
 	}
 
-	public static void setQuantity(int quantity) {
-		Cart.quantity = quantity;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
-	public static ArrayList getProducts(String uid){
+	public ArrayList<Product> getProducts(String uid){
+		try {
+			db=new DBConnection();
+			con=db.getConnection();
+			st = con.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		ArrayList<Product> products=new ArrayList<Product>();
 		try {
 			String proid="";

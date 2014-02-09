@@ -23,6 +23,11 @@ public class Registration {
 	static PreparedStatement prep;	
 
 	public Registration(){
+		
+	}
+
+	@SuppressWarnings("static-access")
+	public void generateCode(String userId,String email){
 		try {
 			db=new DBConnection();
 			con=db.getConnection();
@@ -32,10 +37,6 @@ public class Registration {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-
-	@SuppressWarnings("static-access")
-	public static void generateCode(String userId,String email){
 		Mailer mail=new Mailer();
 		int n = 6;
 		String status="not-activated";
@@ -56,10 +57,19 @@ public class Registration {
 		String msg="Congratulations.. You have succesfully registered with Legend"+"\n"+"Enter this confirmation code to validate your account"+"\n"+"Code : "+randomNum+"";
 		msg=msg+"\n\t\t\t"+"Legend-The new way to shop"+"\n\t\t\t"+"A project of Chanakya Group";
 		System.out.println(msg);
-		//	mail.send(email, subject, msg);
+		mail.send(email, subject, msg);
 	}
 
-	public static boolean validateAccount(String email,int code){
+	public boolean validateAccount(String email,int code){
+		try {
+			db=new DBConnection();
+			con=db.getConnection();
+			st = con.createStatement();
+			stmt = con.createStatement();
+			stmt2 = con.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		try{
 			int number=0;
 			rs1=stmt.executeQuery("select userId from user where email='"+email+"';");

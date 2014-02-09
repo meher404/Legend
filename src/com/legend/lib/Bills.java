@@ -19,51 +19,44 @@ public class Bills {
 	static PreparedStatement prep;	
 
 	public Bills(){
-		try {
-			db=new DBConnection();
-			con=db.getConnection();
-			st = con.createStatement();
-			stmt=con.createStatement();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	
 	}
 
-	private static String saleid;
-	private static int addressID;
-	private static java.util.Date timeStamp;
-	private static double totalAmount;
-	private static String DeliveryStatus;
+	private String saleid;
+	private int addressID;
+	private java.util.Date timeStamp;
+	private double totalAmount;
+	private String DeliveryStatus;
 
-	public static String getSaleid() {
+	public String getSaleid() {
 		return saleid;
 	}
-	public static void setSaleid(String saleid) {
-		Bills.saleid = saleid;
+	public void setSaleid(String saleid) {
+		this.saleid = saleid;
 	}
-	public static int getAddressID() {
+	public int getAddressID() {
 		return addressID;
 	}
-	public static void setAddressID(int addressID) {
-		Bills.addressID = addressID;
+	public void setAddressID(int addressID) {
+		this.addressID = addressID;
 	}
-	public static java.util.Date getTimeStamp() {
+	public java.util.Date getTimeStamp() {
 		return timeStamp;
 	}
-	public static void setTimeStamp(java.util.Date timeStamp2) {
-		Bills.timeStamp = timeStamp2;
+	public void setTimeStamp(java.util.Date timeStamp2) {
+		this.timeStamp = timeStamp2;
 	}
-	public static double getTotalAmount() {
+	public double getTotalAmount() {
 		return totalAmount;
 	}
-	public static void setTotalAmount(double totalAmount) {
-		Bills.totalAmount = totalAmount;
+	public void setTotalAmount(double totalAmount) {
+		this.totalAmount = totalAmount;
 	}
-	public static String getDeliveryStatus() {
+	public String getDeliveryStatus() {
 		return DeliveryStatus;
 	}
-	public static void setDeliveryStatus(String deliveryStatus) {
-		DeliveryStatus = deliveryStatus;
+	public void setDeliveryStatus(String deliveryStatus) {
+		this.DeliveryStatus = deliveryStatus;
 	}
 	
 	static double calculateTotal(String saleid){
@@ -84,8 +77,16 @@ public class Bills {
 		return total;
 	}
 	
-	@SuppressWarnings("static-access")
-	static void insertBills(OrderDetails Od){
+	
+	void insertBills(OrderDetails Od){
+		try {
+			db=new DBConnection();
+			con=db.getConnection();
+			st = con.createStatement();
+			stmt=con.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		saleid=Od.getSaleid();
 		totalAmount = calculateTotal(saleid);
 		try {

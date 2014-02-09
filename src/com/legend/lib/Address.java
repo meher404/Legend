@@ -15,58 +15,62 @@ public class Address {
 	Statement st1=null;
 	static PreparedStatement prep;	
 
-	public Address() throws SQLException {
+	public Address(){
 		// TODO Auto-generated constructor stub
-		db=new DBConnection();
-		con=db.getConnection();
-		st = con.createStatement();
 	}
 	
-	private static int addressID;
-	private static String doorNo;
-	private static String street;
-	private static String city;
-	private static String state;
-	private static Long pincode;
+	private int addressID;
+	private String doorNo;
+	private String street;
+	private String city;
+	private String state;
+	private Long pincode;
 
-	public static int getAddressID() {
+	public int getAddressID() {
 		return addressID;
 	}
-	public static void setAddressID(int addressID) {
-		Address.addressID = addressID;
+	public void setAddressID(int addressID) {
+		this.addressID = addressID;
 	}
-	public static String getDoorNo() {
+	public String getDoorNo() {
 		return doorNo;
 	}
-	public static void setDoorNo(String doorNo) {
-		Address.doorNo = doorNo;
+	public void setDoorNo(String doorNo) {
+		this.doorNo = doorNo;
 	}
-	public static String getStreet() {
+	public String getStreet() {
 		return street;
 	}
-	public static void setStreet(String street) {
-		Address.street = street;
+	public void setStreet(String street) {
+		this.street = street;
 	}
-	public static String getCity() {
+	public String getCity() {
 		return city;
 	}
-	public static void setCity(String city) {
-		Address.city = city;
+	public void setCity(String city) {
+		this.city = city;
 	}
-	public static String getState() {
+	public String getState() {
 		return state;
 	}
-	public static void setState(String state) {
-		Address.state = state;
+	public void setState(String state) {
+		this.state = state;
 	}
-	public static Long getPincode() {
+	public Long getPincode() {
 		return pincode;
 	}
-	public static void setPincode(Long pincode) {
-		Address.pincode = pincode;
+	public void setPincode(Long pincode) {
+		this.pincode = pincode;
 	}
 	
 	public int generateAddressId(long pin){
+		db=new DBConnection();
+		con=db.getConnection();
+		try {
+			st = con.createStatement();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 		int addid;
 		addid=(int) (((pin+Math.random()*1000)));
 		try {
@@ -86,6 +90,13 @@ public class Address {
 	}
 
 	public void insertAddress(){
+		db=new DBConnection();
+		con=db.getConnection();
+		try {
+			st = con.createStatement();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 		try {
 			prep = con.prepareStatement("insert into address VALUES(?,?,?,?,?,?);");
 			prep.setInt(1,addressID);
@@ -96,7 +107,6 @@ public class Address {
 			prep.setLong(6, pincode);
 			prep.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 	}

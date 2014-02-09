@@ -19,24 +19,22 @@ public class Product {
 	ResultSet rs=null;
 	static PreparedStatement prep;	
 
-	private static String pName;
-	private static String PID;
-	private static String imagesrc;
-	private static double price;
-	private static int quantity;
-	private static String description;
-	private static int manufactureID;
-	private static int rating;
-	private static double discount;
-	private static int categoryID;
-	private Category cat=new Category();
-	private Manufacturer man=new Manufacturer();
-	
-	public Product() throws SQLException{
+	private  String pName;
+	private  String PID;
+	private  String imagesrc;
+	private  double price;
+	private  int quantity;
+	private  String description;
+	private  int manufactureID;
+	private  int rating;
+	private  double discount;
+	private  int categoryID;
+	//private Category cat;//=new Category();
+	//private Manufacturer man;//=new Manufacturer();
 
-		db=new DBConnection();
-		con=db.getConnection();
-		st = con.createStatement();
+	public Product(){
+
+
 	}
 
 	public int getManufactureID() {
@@ -114,10 +112,14 @@ public class Product {
 		this.discount = discount;
 	}
 
-	
+
 
 
 	public Category getCategory(int categoryID) throws SQLException{
+		db=new DBConnection();
+		con=db.getConnection();
+		st = con.createStatement();
+
 		Category c=new Category();
 		String name=null;
 		try {
@@ -131,10 +133,15 @@ public class Product {
 		}
 		c.setCategoryName(name);
 		c.setCategoryID(categoryID);
+
+		con.close();
 		return c;
 	}
-	
+
 	public Manufacturer getManufacturer(int ManufactureID) throws SQLException{
+		db=new DBConnection();
+		con=db.getConnection();
+		st = con.createStatement();
 		Manufacturer m=new Manufacturer();
 		String name=null,desc=null;
 		try {
@@ -151,39 +158,60 @@ public class Product {
 		m.setManfDescription(desc);
 		m.setManufactureID(ManufactureID);
 		m.setManufacturerName(name);
+		con.close();
 		return m;
 
 	}
 
-	String GeneratePID(int catID,int manfID){
-		String id=catID+"";
+	public String GeneratePID(int catID,int manfID){
+		db=new DBConnection();
+		con=db.getConnection();
+		String id="";
+		id=catID+"";
 		id=id+manfID+"";
+		try {
+			st = con.createStatement();
+			rs=st.executeQuery("select pid from product");
+			while(rs.next()){
+				String temp=rs.getString("pid");
+				if(temp.equals(id)){
+					int i=Integer.parseInt(id);
+					GeneratePID(i,5);
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return id;
 
 	}
 
-    @Override
-    public int hashCode() {
-        return PID.hashCode();
-    }
-    
-    public boolean equals(final Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        final Product other = (Product) obj;
-        if(this.getPID().equals(other.getPID()))
-    	   return true;
-        else
-        	return false;
-    }
-	
-	static void insertDB() throws SQLException
+	@Override
+	public int hashCode() {
+		return PID.hashCode();
+	}
+
+	public boolean equals(final Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final Product other = (Product) obj;
+		if(this.getPID().equals(other.getPID()))
+			return true;
+		else
+			return false;
+	}
+
+	void insertDB() throws SQLException
 	{
-		
+		db=new DBConnection();
+		con=db.getConnection();
+		st = con.createStatement();
+
 		try {
 			prep = con.prepareStatement("insert into product VALUES(?,?,?,?,?,?,?,?,?,?);");
 			prep.setString(1,pName);
@@ -200,10 +228,16 @@ public class Product {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			con.close();
 		} 
+		con.close();
 	}
-	static void deleteDB() throws SQLException
+
+	void deleteDB() throws SQLException
 	{
+		db=new DBConnection();
+		con=db.getConnection();
+		st = con.createStatement();
 		try {
 			Statement st=conn.createStatement();
 			String s="delete *from product where pid='"+PID+"';";
@@ -211,11 +245,11 @@ public class Product {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			con.close();
 		}
+		con.close();
 	}
-	static void updateDB(){
 
-	}
 
 	public String toString(){
 		String prod;

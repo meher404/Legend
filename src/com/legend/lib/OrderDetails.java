@@ -16,53 +16,53 @@ public class OrderDetails {
 	static ResultSet rs=null;
 	static PreparedStatement prep;
 	
-	private static String saleid;
-	private static String userId;
-	private static String pid;
-	private static int quantity;
+	private String saleid;
+	private String userId;
+	private String pid;
+	private int quantity;
 
 	public OrderDetails(){
-		try {
-			db=new DBConnection();
-			con=db.getConnection();
-			st = con.createStatement();
-			saleid="sale001";
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		saleid="sale001";
 	}
 
 	
 
-	public static String getSaleid() {
+	public String getSaleid() {
 		return saleid;
 	}
-	public static void setSaleid(String saleid) {
-		OrderDetails.saleid = saleid;
+	public void setSaleid(String saleid) {
+		this.saleid = saleid;
 	}
-	public static String getUserId() {
+	public String getUserId() {
 		return userId;
 	}
-	public static void setUserId(String userId) {
-		OrderDetails.userId = userId;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-	public static String getPid() {
+	public String getPid() {
 		return pid;
 	}
-	public static void setPid(String pid) {
-		OrderDetails.pid = pid;
+	public void setPid(String pid) {
+		this.pid = pid;
 	}
-	public static int getQuantity() {
+	public int getQuantity() {
 		return quantity;
 	}
-	public static void setQuantity(int quantity) {
-		OrderDetails.quantity = quantity;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 	
 
 	@SuppressWarnings("static-access")
-	public static boolean insertOrders(Cart c) throws SQLException{
+	public boolean insertOrders(Cart c) throws SQLException{
+		try {
+			db=new DBConnection();
+			con=db.getConnection();
+			st = con.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		userId=c.getUid();
 		pid=c.getPid();
 		quantity=c.getQuantity();
@@ -72,7 +72,6 @@ public class OrderDetails {
 			return false;
 		}
 		try {
-			
 			prep = con.prepareStatement("insert into orderdetails values(?,?,?,?);");
 			prep.setString(1,saleid);
 			prep.setString(2, userId);

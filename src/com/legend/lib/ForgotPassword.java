@@ -21,6 +21,10 @@ public class ForgotPassword {
 	static PreparedStatement prep;	
 
 	public ForgotPassword(){
+
+	}
+
+	public boolean sendMail(String email){
 		try {
 			db=new DBConnection();
 			con=db.getConnection();
@@ -29,15 +33,12 @@ public class ForgotPassword {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public boolean sendMail(String email){
 		String subject="Legend Password Assistance";
 		String pwd = "";
 		try {
 			rs=st.executeQuery("select password from user where email='"+email+"';");
 			if(rs.next()){
-				 pwd=rs.getString("password");
+				pwd=rs.getString("password");
 			}
 			else{
 				return false;
@@ -51,16 +52,24 @@ public class ForgotPassword {
 		Mailer.send(email, subject, msg);
 		return true;
 	}
-	
+
 	public boolean verify(String email,String code){
+		try {
+			db=new DBConnection();
+			con=db.getConnection();
+			st = con.createStatement();
+			stmt = con.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		String pwd = "";
 		try {
 			rs=st.executeQuery("select password from user where email='"+email+"';");
 			if(rs.next()){
-				 pwd=rs.getString("password");
-				 if(code.equals(pwd)){
-					 return true;
-				 }
+				pwd=rs.getString("password");
+				if(code.equals(pwd)){
+					return true;
+				}
 			}
 			else{
 				return false;
@@ -70,8 +79,16 @@ public class ForgotPassword {
 		}
 		return false;
 	}
-	
+
 	public void newPassword(String email,String pwd){
+		try {
+			db=new DBConnection();
+			con=db.getConnection();
+			st = con.createStatement();
+			stmt = con.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		CaesarCipher c=new CaesarCipher();
 		String encPwd=c.encrypt(pwd, 2);
 		try {
@@ -80,5 +97,5 @@ public class ForgotPassword {
 			e.printStackTrace();
 		}
 	}
-	
+
 }

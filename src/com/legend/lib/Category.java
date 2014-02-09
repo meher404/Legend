@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-class Category
+public class Category
 {
 	DBConnection db=null;
 	static ResultSet rs=null;
@@ -14,17 +14,15 @@ class Category
 	static Statement st=null;
 	Statement st1=null;
 	static PreparedStatement prep;	
-	public Category() throws SQLException {
-		// TODO Auto-generated constructor stub
-		db=new DBConnection();
-		con=db.getConnection();
-		st = con.createStatement();
-		st1=con.createStatement();
+	
+	
+	public Category() {
+		
 	}
 
 	
-	private static int categoryID=0;
-	private static String categoryName;
+	private int categoryID=0;
+	private String categoryName;
 	public int getCategoryID() {
 		return categoryID;
 	}
@@ -42,6 +40,10 @@ class Category
 	
 	public int generateCategoryID(String CategoryName) throws SQLException{
 		try {
+			db=new DBConnection();
+			con=db.getConnection();
+			st = con.createStatement();
+			st1=con.createStatement();
 			rs=st.executeQuery("SELECT categoryName FROM category;");
 			while(rs.next())
 			{
@@ -80,8 +82,16 @@ class Category
 	}
 	
 	
-	public static void  insert()
+	public void  insert()
 	{
+		try {
+			db=new DBConnection();
+			con=db.getConnection();
+			st = con.createStatement();
+			st1=con.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		try {
 			st=con.createStatement();
 			prep = con.prepareStatement("insert into Category VALUES(?,?);");
@@ -89,7 +99,6 @@ class Category
 			prep.setString(2,categoryName);
 			prep.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

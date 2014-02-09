@@ -35,14 +35,14 @@ public class User {
 		}
 	}
 
-	private static String name;
-	private static String userID;
-	private static String email;
-	private static String pwd;
-	private static long phne;
-	private static int addressID;
-	private static String gender;
-	private static Date dob;
+	private String name;
+	private String userID;
+	private String email;
+	private String pwd;
+	private long phne;
+	private int addressID;
+	private String gender;
+	private Date dob;
 
 	public String getName() {
 		return name;
@@ -71,7 +71,7 @@ public class User {
 		this.email = email;
 	}
 
-	public static String getPwd() {
+	public String getPwd() {
 		return pwd;
 	}
 
@@ -119,6 +119,15 @@ public class User {
 
 
 	public String generateUserId(String name,int addId){
+		try {
+			db=new DBConnection();
+			con=db.getConnection();
+			st = con.createStatement();
+			stmt = con.createStatement();
+			stmt2 = con.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		String uid="";
 		uid=name.substring(0,4)+addId%10;
 		try {
@@ -137,7 +146,16 @@ public class User {
 	}
 
 	@SuppressWarnings("static-access")
-	public static void insertUser(){
+	public void insertUser(){
+		try {
+			db=new DBConnection();
+			con=db.getConnection();
+			st = con.createStatement();
+			stmt = con.createStatement();
+			stmt2 = con.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		try {
 			System.out.println(getPwd());
 			String encpwd= encryptPwd(getPwd());
@@ -161,7 +179,16 @@ public class User {
 	
 
 	@SuppressWarnings({ "static-access", "unchecked" })
-	public static HashMap<Product, Integer> getCart(){
+	public HashMap<Product, Integer> getCart(){
+		try {
+			db=new DBConnection();
+			con=db.getConnection();
+			st = con.createStatement();
+			stmt = con.createStatement();
+			stmt2 = con.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		ArrayList<Product> pro=new ArrayList<Product>();
 		int i=0;
 		HashMap<Product, Integer> hash=new HashMap<Product, Integer>();
@@ -191,11 +218,15 @@ public class User {
 
 	}
 
-	private void hash() {
-		
-	}
 	
-	public static void deleteUser(){
+	public void deleteUser(){
+		try {
+			db=new DBConnection();
+			con=db.getConnection();
+			st = con.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		try {
 			Statement st=conn.createStatement();
 			String s="delete *from user where pid='"+userID+"';";
@@ -206,7 +237,15 @@ public class User {
 	}
 
 	@SuppressWarnings("static-access")
-	public Address getAddress(int addressID) throws SQLException{
+	public Address getAddress(int addressID){
+		try {
+			db=new DBConnection();
+			con=db.getConnection();
+			st = con.createStatement();
+			stmt = con.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		Address a=new Address();
 		String doorNo="",street="",city="",state="";
 		long pin=0;
@@ -238,8 +277,17 @@ public class User {
 		return encryptedPwd;
 	}
 
-	@SuppressWarnings({ "rawtypes", "static-access" })
-	public static ArrayList getOrders(String userid) throws SQLException{
+	
+	public ArrayList<OrderDetails> getOrders(String userid) throws SQLException{
+		try {
+			db=new DBConnection();
+			con=db.getConnection();
+			st = con.createStatement();
+			stmt = con.createStatement();
+			stmt2 = con.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		ArrayList<OrderDetails> od=new ArrayList<OrderDetails>();
 
 		rs=st.executeQuery("select * from orderdetails where userid='"+userid+"';");
@@ -248,36 +296,26 @@ public class User {
 			String saleid=rs.getString("saleid");
 			String pid=rs.getString("pid");
 			int quantity=rs.getInt("quantity");
-			System.out.println("************************************************");
-			System.out.println("from table");
-			System.out.println(saleid+"\n"+pid+"\n"+quantity);
 			OrderDetails order=new OrderDetails();
 			order.setPid(pid);
 			order.setQuantity(quantity);
 			order.setSaleid(saleid);
 			order.setUserId(userid);
-			System.out.println("************************************************");
-			System.out.println("from order after selecting and before adding to arraylist");
-			System.out.println(order.getPid());
-			System.out.println(order.getQuantity());
-			System.out.println(order.getSaleid());
-			System.out.println(order.getUserId());
 			od.add(order);
-			System.out.println("************** from array list************8");
-			OrderDetails od1= new OrderDetails();
-			//		System.out.println(od.get(i).toString());
-			od1=od.get(i);
-			System.out.println(od1.getPid());
-			System.out.println(od1.getQuantity());
-			System.out.println(od1.getSaleid());
-			System.out.println(od1.getUserId());
-			//System.out.println(od.toString());
 		}
 		return od;
 	}
 
-	@SuppressWarnings({ "static-access", "rawtypes" })
-	public static ArrayList getBills(String userid) throws SQLException{
+	public ArrayList<Bills> getBills(String userid) throws SQLException{
+		try {
+			db=new DBConnection();
+			con=db.getConnection();
+			st = con.createStatement();
+			stmt = con.createStatement();
+			stmt2 = con.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		ArrayList<Bills> bills=new ArrayList<Bills>();
 		Vector<String> v=new Vector<String>();
 		rs1=stmt.executeQuery("select saleid from orderdetails where userid='"+userid+"';");
@@ -289,7 +327,6 @@ public class User {
 			else{
 				continue;
 			}
-		//	System.out.println("hii"+saleid);
 			rs2=stmt2.executeQuery("select * from bills where saleid='"+saleid+"';");
 			if(rs2.next()){
 			
