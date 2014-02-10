@@ -1,4 +1,6 @@
 package com.legend.lib;
+
+//package com.legend.lib;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -317,6 +319,38 @@ public class helpFunctions {
 			e.printStackTrace();
 		}
 		return pid;
+	}
+	
+	public String getManufactureName(int manufactureID){
+		db=new DBConnection();
+		con=db.getConnection();
+		String name="";
+		try {
+			st=con.createStatement();
+			rs=st.executeQuery("select manufacturename from manufacturer where manufactureid='"+manufactureID+"';");
+			while(rs.next()){
+				name=rs.getString("manufacturename");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return name;
+	}
+	
+	public String getCategoryName(int CategoryID){
+		db=new DBConnection();
+		con=db.getConnection();
+		String name="";
+		try {
+			st=con.createStatement();
+			rs=st.executeQuery("select Categoryname from category where CategoryID='"+CategoryID+"';");
+			while(rs.next()){
+				name=rs.getString("Categoryname");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return name;
 	}
 
 }
