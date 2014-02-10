@@ -3,6 +3,7 @@ package com.legend.control;
 import java.awt.print.Printable;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -41,8 +42,13 @@ public class UserServlet extends HttpServlet {
 		String email=request.getParameter("email");
 		User user=new User();
 		user=userObj.userObject(email);
-		bills=user.getBills();
-		orders=user.getOrders();
+		try {
+			bills=user.getBills();
+			orders=user.getOrders();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		cart=user.getCart();
 		
 	}
