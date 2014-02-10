@@ -31,8 +31,9 @@ public class getNewProducts extends HttpServlet {
 		ArrayList<Product> array=new ArrayList<Product>();
 		array=help.getNewProducts();
 		for (int i = 0; i < array.size(); i++) {
-			Product pro=new Product();
+			Product pro;
 			pro=array.get(i);
+			System.out.println("image: "+pro.getImagesrc());
 			out.println(pro.toString());
 		}
 	

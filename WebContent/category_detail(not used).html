@@ -58,7 +58,7 @@
 	 </script>
     </head>
     
-	<body onload="getCategory()">
+	<body>
     <!--******************** NAVBAR ********************-->
     <div class="navbar-wrapper">
       <div class="navbar navbar-inverse navbar-fixed-top">
@@ -71,7 +71,7 @@
             <nav class="pull-right nav-collapse collapse">
               <ul id="menu-main" class="nav">
                 <li><a title="portfolio" href="#portfolio">All Products</a></li>
-                <!--<li><a title="services" href="#services">Categories</a></li> -->
+                <li><a title="services" href="#services">Categories</a></li>
                 <li><a title="news" href="#news">MyCart</a></li>
                 <!-- <li><a title="team" href="#team">Register/Login</a></li> -->
                 <li><a title="contact" href="#contact">Sign In</a></li> 
@@ -134,81 +134,96 @@
     
 	<hr>
     
-	<!--******************** All Products Section ********************-->
-    <section id="portfolio" class="single-page scrollblock">
+	<!--******************** New Products Section ********************-->
+     <script>
+     
+	function asd(cat) {
+		var url = "CategoryDetail?cat="+cat;
+		document.getElementById('folio-headline').innerHTML="All Products"
+        $.get(url,function(responseText) { 
+        	document.getElementById('newproducts').innerHTML=responseText;         
+        });
+	};
+	</script>
+	
+	<section id="portfolio" class="single-page scrollblock">
       <div class="container">
        
         <h1 id="folio-headline">All Products</h1>
-        <div class="row">
-          <div class="span4">
-            <div id="regDiv" style="display : none;">
+			<div id="regDiv" style="display : none;">
 				<div id="regBg" style=" opacity:0.68; height:643px; display:block" onclick="hide()"></div>
 				<div id="main" style="position: absolute;top:30px;left: 400px;"><form id="form_add_to_cart" name="form_add_to_cart"></form></div>
 			</div>
-			<div class="mask2"> <a href="img/products/samsung-s4.jpg" rel="prettyPhoto"><img src="img/products/samsung-s4.jpg" alt=""></a> </div>
-            <div class="inside" id="t1" name="t1">
-              <hgroup>
-                <h4>Samsung Galaxy S4</h4>
-              </hgroup>
-              <div class="entry-content" >
-                <table class="table">
-				<tr><td>Name: </td><td>S4</td></tr>
-				<tr><td>Price: </td><td>Rs. 50000</td></tr>
-				<tr><td>Category: </td><td>Mobile Phone</td></tr>
-				</table>
-                <a class="more-link" onclick="unHide('t1')" >ADD TO CART</a> </div>
-            </div>
+		
+		<div class="row" id="allproducts" >
           
-		  <!-- /.inside -->          
-		  </div>
-          
-		  <!-- /.span4 -->
-          <div class="span4">
-           
-		   <div class="mask2"> <a href="img/products/samsung-s4.jpg" rel="prettyPhoto"><img src="img/products/samsung-s4.jpg" alt=""></a> </div>
-            <div class="inside" id="t2" name="t2">
-              <hgroup>
-                <h4>Samsung Galaxy S5</h4>
-              </hgroup>
-              <div class="entry-content" >
-                <table class="table">
-				<tr><td>Name: </td><td>S5</td></tr>
-				<tr><td>Price: </td><td>Rs. 50000</td></tr>
-				<tr><td>Category: </td><td>Mobile Phone</td></tr>
-				</table>
-                <a class="more-link" onclick="unHide('t2')">ADD TO CART</a> </div>
-            </div>
-		</div>
-          <!-- /.span4 -->
-          <div class="span4">
-		  
-            <div class="mask2"> <a href="img/products/samsung-s4.jpg" rel="prettyPhoto"><img src="img/products/samsung-s4.jpg" alt=""></a> </div>
-            <div class="inside"  id="t3" name="t3">
-              <hgroup>
-                <h4>Samsung Galaxy S6</h4>
-              </hgroup>
-              <div class="entry-content">
-                <table class="table">
-				<tr><td>Name: </td><td>S6</td></tr>
-				<tr><td>Price: </td><td>Rs. 50000</td></tr>
-				<tr><td>Category: </td><td>Mobile Phone</td></tr>
-				</table>
-                <a class="more-link" onclick="unHide('t3')">ADD TO CART</a> </div>
-            </div>
-            
-			<!-- /.inside -->
-          </div>
-          <!-- /.span4 -->
         </div>
         <!-- /.row -->
       </div>
       <!-- /.container -->
     </section>
+   
+	
+	<hr>
+    
+	<!--******************** Categories Section ********************-->
+    <section id="services" class="single-page scrollblock">
+      <div class="container">
+        <div class="align"><i class="icon-cog-circled"></i></div>
+        <h1>Categories</h1>
+        <!-- Four columns -->
+        <div class="row">
+          <div class="span3" onclick="getProductsByCategory('computers');" >
+            <div class="align"> <i class="icon-desktop sev_icon"></i> </div>
+            <h2>Computers</h2>
+          </div>
+          <!-- /.span3 -->
+          <div class="span3" onclick="window.open('CategoryDetail?cat=books','_parent');">
+            <div class="align"> <i class="icon-vector sev_icon"></i> </div>
+            <h2>Books</h2>
+          </div>
+          <!-- /.span3 -->
+          <div class="span3" onclick="window.open('CategoryDetail?cat=cosmetics','_parent');">
+            <div class="align"> <i class="icon-basket sev_icon"></i> </div>
+            <h2>Cosmetics</h2>
+          </div>
+          <!-- /.span3 -->
+          <div class="span3" onclick="window.open('CategoryDetail?cat=mobile','_parent');">
+            <div class="align"> <i class="icon-mobile-1 sev_icon"></i> </div>
+            <h2>Mobile</h2>
+          </div>
+		    <div class="span3"  onclick="getProductsByCategory('computers');" >
+            <div class="align"> <i class="icon-desktop sev_icon"></i> </div>
+            <h2>Computers</h2>
+          </div>
+          <!-- /.span3 -->
+          <div class="span3" onclick="getProductsByCategory('books');">
+            <div class="align"><i class="icon-vector sev_icon"></i></div>
+            <h2>Books</h2>
+          </div>
+          <!-- /.span3 -->
+          <div class="span3" onclick="getProductsByCategory('cosmetics');">
+            <div class="align"><i class="icon-basket sev_icon"></i></div>
+            <h2>Cosmetics</h2>
+            
+          </div>
+          <!-- /.span3 -->
+          <div class="span3" onclick="getProductsByCategory('mobile');">
+            <div class="align"><i class="icon-mobile-1 sev_icon"></i></div>
+            <h2>Mobile</h2>
+          </div>
+          <!-- /.span3 -->
+        </div>
+		<br/>
+		
+      <!-- /.container -->
+    </section>
     
 	<hr>
-	
+    
+    
 	<!--******************** My Cart(only when logged in) ********************-->
-    <section id="news" class="single-page scrollblock">
+    <section id="news" class="single-page scrollblock" >
       <div class="container">
         <div class="align"><i class="icon-pencil-circled"></i></div>
         <h1>My Cart</h1>
@@ -274,15 +289,33 @@
         <!-- /.row -->
       </div>
         <!-- /.row -->
-        <a href="purchase_cart.html" target="_blank" class="btn btn-large">Purchase</a> </div>
+        <a href="purchase_cart.html#contact" target="_blank" class="btn btn-large">Purchase</a> </div>
+    
     </section>
     
 	<hr>
     
 	
+   
 	<!--******************** Register Section ******************** -->
+	<script>
+	function checkAvailability(){
+		var url = 'CheckValidEmail?email='+document.getElementById("your-email").value;
+		$.get(url,function(responseText) { 
+			var res = responseText;
+			console.log("resp: "+res);
+			if(res==""){
+				document.getElementById('register-submit').type="submit";
+			}
+			else{
+				document.getElementById('register-submit').type="hidden";
+			}
+			document.getElementById('valid_email').innerHTML=res;
+        });
+	};
+	</script>
     <section id="contact" class="single-page scrollblock">
-      <div class="container"> 
+      <div class="container" id="reg_login"> 
         <div class="align"><i class="icon-group-circled"></i></div>
        
 		<h1 id="register_title">Register</h1>
@@ -292,7 +325,7 @@
             <div class="cform" id="theme-form">
               
                 <span id="pd">Personal Details:</span> 
-				<form id="register-form" action="#" method="post" class="cform-form">
+				<form id="register-form" action="/Legend/RegisterServlet" method="post" class="cform-form">
 				<div class="row">
 				
                   <div class="span4"> <span class="your-name">
@@ -300,8 +333,8 @@
 					title="your name"  data-validation="custom" data-validation-regexp="^([a-z]+)$" data-validation-error-msg="Only Alphabets allowed" >
                     </span> </div>
                   <div class="span4"> <span class="your-email">
-                    <input type="text" name="your-email" placeholder="Your Email" class="cform-text" size="40" title="your email"  data-validation="email">
-                    </span> </div>
+                    <input type="text" name="your-email" id="your-email" placeholder="Your Email" class="cform-text" size="40" title="your email" onkeyup="checkAvailability()"  onchange="checkAvailability()" data-validation="email" />
+					</span><div id="valid_email"></div> </div>
 				  <div class="span4"> <span class="your-password">
                     <input type="password" placeholder="Your Password" name="pass_confirmation" data-validation-length="5" 
 					size="40"  class="cform-password" data-validation-error-msg="Minimum 5 characters">
@@ -348,7 +381,7 @@
                 </div>
                 
                 <div>
-                  <center><input type="submit" value="Register" class="cform-submit"></center>
+                  <center><input type="submit" id="register-submit" value="Register" class="btn btn-large"></center>
                 </div>
                 <div class="cform-response-output"></div>
               </form>
@@ -358,7 +391,40 @@
         </div>
        
       </div>
-      
+      <div id="resp_act" style="display:none">
+<div class="container"> 
+        <div class="align"><i class="icon-group-circled"></i></div>
+       
+		<h1 id="register_title">Register</h1>
+		
+        <div class="row">
+          <div class="span12"> 
+            <div class="cform" id="theme-form">
+                
+				<form id="register-activate" action="Activate" method="post" class="cform-form">
+					<div class="row">				
+						<div align="center"><h1>Thank You for your Registeration.</h1></div>
+						<div align="center">An <b><u>ACTIVATION CODE</u></b> has been sent to your email ID: <span id="act_eid"></span> Kindly enter the code to confirm your activation.</div>
+					</div>
+					<p></p>
+					<div class="row">
+						<div class="span4"></div>
+						<div class="span4"><span class="your-name">
+							<input type="text" name="verfCode" id="verfCode" placeholder="Verification Code" class="cform-text" size="40" title="Verification code sent to email" />
+						</span></div>
+					</div>
+                
+				
+                   <center><input type="submit" value="Activate" class="cform-submit"></center>
+                  <div class="cform-response-output"></div>
+                </form>
+            </div>
+          </div>
+          
+        </div>
+       
+      </div>
+</div>
     </section> 
    
 	<hr>
@@ -384,19 +450,34 @@
 	</script>
 	<script>
 	var check_sign = true;
+	function checkEmailLogin(){
+		var url = 'CheckValidEmailLogin?email='+document.getElementById("your-email123").value;
+		$.get(url,function(responseText) { 
+			var res = responseText;
+			console.log("resp: "+res);
+			if(res==""){
+				document.getElementById('login-submit').type="submit";
+			}
+			else{
+				document.getElementById('login-submit').type="hidden";
+			}
+			document.getElementById('valid_email').innerHTML=res;
+        });
+	};
+	
 		function registerToSignIn(){
 		if(check_sign==true){
 			document.getElementById('register-form').innerHTML="";
 			document.getElementById('pd').innerHTML="";
 			document.getElementById('register_title').innerHTML="Login";
-			var inhtml = "<div class=\"row\"><div class=\"span4\"> <span class=\"your-email\"><input type=\"text\" name=\"your-email\" placeholder=\"Your Email\" class=\"cform-text\" size=\"40\" title=\"your email\"  data-validation=\"email\">"+
-                    "</span> </div>"+
+			var inhtml = "<div class=\"row\"><div class=\"span4\"> <span class=\"your-email\"><input onchange=\"checkEmailLogin()\" onkeyup=\"checkEmailLogin()\" type=\"text\" id=\"your-email123\" name=\"your-email\" placeholder=\"Your Email\" class=\"cform-text\" size=\"40\" title=\"your email\"  data-validation=\"email\">"+
+                    "</span><div id='valid_email'> </div> </div>"+
 				  "<div class=\"span4\"> <span class=\"your-password\">"+
                     "<input type=\"password\" placeholder=\"Your Password\" name=\"pass_confirmation\" data-validation-length=\"5\""+ 
 					"size=\"40\"  class=\"cform-password\" data-validation-error-msg=\"Minimum 5 characters\">"+
                     "</span> </div>"+
 					"<div class=\"span4\"> <span class=\"your-name\">"+
-                    "<input type=\"submit\" value=\"Login\" class=\"cform-submit\"></span> </div></div>";
+                    "<input type=\"submit\" value=\"Login\" id=\"login-submit\" name=\"login-submit\" class=\"cform-submit\"></span> </div></div>";
 			document.getElementById('register-form').innerHTML = inhtml;
 			document.getElementById('register-form').action="Login";
 			
@@ -407,19 +488,9 @@
 				location.reload();
 				check_sign=true;
 			}
-		}
-	function parseUrl( url ) {
-		var a = document.createElement('a');
-		a.href = url;
-		return a;
-	}
-	function getCategory(){
-		var url = document.URL;
-		var a = parseUrl(url).search;
-		console.log( a.split('=')[1]);
-	}
-
+		};
 	</script>
+
 	<!-- <script type="text/javascript" src="js/lightbox-2.6.min.js"></script> -->
     
    

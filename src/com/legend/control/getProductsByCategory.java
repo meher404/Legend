@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,33 +19,32 @@ import com.legend.lib.helpFunctions;
 /**
  * Servlet implementation class getProductsByCategory
  */
-@WebServlet("/getProductsByCategory")
+@WebServlet("/CategoryDetail")
 public class getProductsByCategory extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out=response.getWriter();
 		response.setContentType("text/html");
+		String html = "";
 		helpFunctions help=new helpFunctions();
 		ArrayList<Product> array=new ArrayList<Product>();
 		Category c=new Category();
 		try {
-			String CategoryName="";
+			String CategoryName=request.getParameter("cat");
 			int catId = c.generateCategoryID(CategoryName) ;
 			array=help.getProductsByCategory(catId);
 			for (int i = 0; i < array.size(); i++) {
-				Product pro=new Product();
+				Product pro;//=new Product();
 				pro=array.get(i);
 				out.println(pro.toString());
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
+	
 
 }

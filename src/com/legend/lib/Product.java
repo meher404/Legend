@@ -41,7 +41,6 @@ public class Product {
 		return manufactureID;
 	}
 
-	@SuppressWarnings("static-access")
 	public void setManufactureID(int manufactureID) {
 		this.manufactureID = manufactureID;
 	}
@@ -50,7 +49,7 @@ public class Product {
 		return categoryID;
 	}
 
-	@SuppressWarnings("static-access")
+	
 	public void setCategoryID(int categoryID) {
 		this.categoryID = categoryID;
 	}
@@ -58,7 +57,7 @@ public class Product {
 	public String getPname() {
 		return pName;
 	}
-	@SuppressWarnings("static-access")
+	
 	public void setPname(String pName) {
 
 		this.pName = pName;
@@ -72,42 +71,42 @@ public class Product {
 	public String getImagesrc() {
 		return imagesrc;
 	}
-	@SuppressWarnings("static-access")
+	
 	public void setImagesrc(String imagesrc) {
 		this.imagesrc = imagesrc;
 	}
 	public double getPrice() {
 		return price;
 	}
-	@SuppressWarnings("static-access")
+	
 	public void setPrice(double price) {
 		this.price = price;
 	}
 	public int getQuantity() {
 		return quantity;
 	}
-	@SuppressWarnings("static-access")
+	
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 	public String getDescription() {
 		return description;
 	}
-	@SuppressWarnings("static-access")
+	
 	public void setDescription(String description) {
 		this.description = description;
 	}
 	public int getRating() {
 		return rating;
 	}
-	@SuppressWarnings("static-access")
+	
 	public void setRating(int rating) {
 		this.rating = rating;
 	}
 	public double getDiscount() {
 		return discount;
 	}
-	@SuppressWarnings("static-access")
+	
 	public void setDiscount(double discount) {
 		this.discount = discount;
 	}
@@ -255,13 +254,13 @@ public class Product {
 		String prod;
 		try {
 			prod = "<div class=\"span4\">"+
-					"<div class=\"mask2\" onclick=\"unHide('"+PID+"')\"><img src=\""+imagesrc+"\" alt=\"\"></a></div>"+
+					"<div class=\"mask2\" onclick=\"unHide('"+PID+"')\"><img width='225' height='225' src=\""+imagesrc+"\" alt=\"\"></a></div>"+
 					"<div class=\"inside\" id=\""+PID+"\" name=\""+PID+"\">"+
 					"<hgroup><h4>"+pName+"</h4></hgroup>"+
 					"<div class=\"entry-content\">"+
 					"<table class=\"table\">"+
 					"<tr><td>Name: </td><td>"+pName+"</td></tr>"+
-					"<tr><td>Price: </td><td>"+price+"</td></tr>"+
+					"<tr><td>Price: </td><td>Rs. "+price+"</td></tr>"+
 					"<tr><td>Category: </td><td>"+getCategory(categoryID).getCategoryName()+"</td></tr>"+
 					"</table>"+
 					"<a class=\"more-link\" onclick=\"unHide('"+PID+"')\">ADD TO CART</a> </div>"+

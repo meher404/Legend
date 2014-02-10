@@ -10,16 +10,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.legend.lib.User;
 import com.legend.lib.helpFunctions;
 
 /**
- * Servlet implementation class CheckValidEmail
+ * Servlet implementation class CheckValidEmailLogin
  */
-@WebServlet("/CheckValidEmail")
-public class CheckValidEmail extends HttpServlet {
+@WebServlet("/CheckValidEmailLogin")
+public class CheckValidEmailLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public CheckValidEmailLogin() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	@SuppressWarnings("static-access")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
@@ -29,11 +39,11 @@ public class CheckValidEmail extends HttpServlet {
 		try {
 			if(help.checkExistingEmail(email)){
 				System.out.println("email exists");
-				out.println("<span style='color:red' align='center'>Email Already Exists</span>");
 				return;
 			}
 			else{
 				System.out.println("email doesn't exist");
+				out.println("<span style='color:red' align='center'>Invalid Email</span>");
 				return;
 			}
 		} catch (SQLException e) {
@@ -41,8 +51,4 @@ public class CheckValidEmail extends HttpServlet {
 		}
 	}
 
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
 }

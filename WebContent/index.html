@@ -70,7 +70,7 @@
             <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
             <nav class="pull-right nav-collapse collapse">
               <ul id="menu-main" class="nav">
-                <li><a title="portfolio" href="#portfolio">New Products</a></li>
+                <li><a title="portfolio" href="#portfolio" onclick="newProducts();">New Products</a></li>
                 <li><a title="services" href="#services">Categories</a></li>
                 <li><a title="news" href="#news">MyCart</a></li>
                 <!-- <li><a title="team" href="#team">Register/Login</a></li> -->
@@ -139,9 +139,16 @@
      
 	$(document).ready(function() {                        
         $.get('getNewProducts',function(responseText) { 
+        	document.getElementById('folio-headline').innerHTML="New Products";
         	document.getElementById('newproducts').innerHTML=responseText;         
         });
 	});
+	function newProducts(){
+		 $.get('getNewProducts',function(responseText) { 
+			 document.getElementById('folio-headline').innerHTML="New Products";
+	        	document.getElementById('newproducts').innerHTML=responseText;         
+	        });
+	};
 	</script>
 	
 	<section id="portfolio" class="single-page scrollblock">
@@ -165,32 +172,46 @@
 	<hr>
     
 	<!--******************** Categories Section ********************-->
+	<script>
+	function getProductsByCategory(cat) {
+		var url = "CategoryDetail?cat="+cat;
+		var heading = cat.replace(cat.charAt(0),cat.charAt(0).toUpperCase());
+		
+		document.getElementById('folio-headline').innerHTML="All Products of "+heading+" Category";
+        $.get(url,function(responseText) { 
+			 window.location = "#portfolio";
+        	document.getElementById('newproducts').innerHTML=responseText;         
+        });
+	};
+	</script>
     <section id="services" class="single-page scrollblock">
       <div class="container">
         <div class="align"><i class="icon-cog-circled"></i></div>
         <h1>Categories</h1>
         <!-- Four columns -->
         <div class="row">
-          <div class="span3" onclick="window.open('CategoryDetail?cat=comp','_parent');" >
+          <div class="span3"  onclick="getProductsByCategory('computers');" >
             <div class="align"> <i class="icon-desktop sev_icon"></i> </div>
             <h2>Computers</h2>
           </div>
           <!-- /.span3 -->
-          <div class="span3" onclick="window.open('CategoryDetail?cat=book','_parent');">
-            <div class="align"> <i class="icon-vector sev_icon"></i> </div>
+          <div class="span3" onclick="getProductsByCategory('books');">
+            <div class="align"><i class="icon-vector sev_icon"></i></div>
             <h2>Books</h2>
           </div>
           <!-- /.span3 -->
-          <div class="span3" onclick="window.open('CategoryDetail?cat=cosm','_parent');">
-            <div class="align"> <i class="icon-basket sev_icon"></i> </div>
+          <div class="span3" onclick="getProductsByCategory('cosmetics');">
+            <div class="align"><i class="icon-basket sev_icon"></i></div>
             <h2>Cosmetics</h2>
+            
           </div>
           <!-- /.span3 -->
-          <div class="span3" onclick="window.open('CategoryDetail?cat=mob','_parent');">
-            <div class="align"> <i class="icon-mobile-1 sev_icon"></i> </div>
+          <div class="span3" onclick="getProductsByCategory('mobile');">
+            <div class="align"><i class="icon-mobile-1 sev_icon"></i></div>
             <h2>Mobile</h2>
           </div>
           <!-- /.span3 -->
+        </div>
         </div>
 		<br/>
 		
@@ -276,6 +297,22 @@
 	
    
 	<!--******************** Register Section ******************** -->
+	<script>
+	function checkAvailability(){
+		var url = 'CheckValidEmail?email='+document.getElementById("your-email").value;
+		$.get(url,function(responseText) { 
+			var res = responseText;
+			console.log("resp: "+res);
+			if(res==""){
+				document.getElementById('register-submit').type="submit";
+			}
+			else{
+				document.getElementById('register-submit').type="hidden";
+			}
+			document.getElementById('valid_email').innerHTML=res;
+        });
+	};
+	</script>
     <section id="contact" class="single-page scrollblock">
       <div class="container" id="reg_login"> 
         <div class="align"><i class="icon-group-circled"></i></div>
@@ -295,8 +332,8 @@
 					title="your name"  data-validation="custom" data-validation-regexp="^([a-z]+)$" data-validation-error-msg="Only Alphabets allowed" >
                     </span> </div>
                   <div class="span4"> <span class="your-email">
-                    <input type="text" name="your-email" placeholder="Your Email" class="cform-text" size="40" title="your email"  data-validation="email">
-                    </span> </div>
+                    <input type="text" name="your-email" id="your-email" placeholder="Your Email" class="cform-text" size="40" title="your email" onkeyup="checkAvailability()"  onchange="checkAvailability()" data-validation="email" />
+					</span><div id="valid_email"></div> </div>
 				  <div class="span4"> <span class="your-password">
                     <input type="password" placeholder="Your Password" name="pass_confirmation" data-validation-length="5" 
 					size="40"  class="cform-password" data-validation-error-msg="Minimum 5 characters">
@@ -412,19 +449,34 @@
 	</script>
 	<script>
 	var check_sign = true;
+	function checkEmailLogin(){
+		var url = 'CheckValidEmailLogin?email='+document.getElementById("your-email123").value;
+		$.get(url,function(responseText) { 
+			var res = responseText;
+			console.log("resp: "+res);
+			if(res==""){
+				document.getElementById('login-submit').type="submit";
+			}
+			else{
+				document.getElementById('login-submit').type="hidden";
+			}
+			document.getElementById('valid_email').innerHTML=res;
+        });
+	};
+	
 		function registerToSignIn(){
 		if(check_sign==true){
 			document.getElementById('register-form').innerHTML="";
 			document.getElementById('pd').innerHTML="";
 			document.getElementById('register_title').innerHTML="Login";
-			var inhtml = "<div class=\"row\"><div class=\"span4\"> <span class=\"your-email\"><input type=\"text\" name=\"your-email\" placeholder=\"Your Email\" class=\"cform-text\" size=\"40\" title=\"your email\"  data-validation=\"email\">"+
-                    "</span> </div>"+
+			var inhtml = "<div class=\"row\"><div class=\"span4\"> <span class=\"your-email\"><input onchange=\"checkEmailLogin()\" onkeyup=\"checkEmailLogin()\" type=\"text\" id=\"your-email123\" name=\"your-email\" placeholder=\"Your Email\" class=\"cform-text\" size=\"40\" title=\"your email\"  data-validation=\"email\">"+
+                    "</span><div id='valid_email'> </div> </div>"+
 				  "<div class=\"span4\"> <span class=\"your-password\">"+
                     "<input type=\"password\" placeholder=\"Your Password\" name=\"pass_confirmation\" data-validation-length=\"5\""+ 
 					"size=\"40\"  class=\"cform-password\" data-validation-error-msg=\"Minimum 5 characters\">"+
                     "</span> </div>"+
 					"<div class=\"span4\"> <span class=\"your-name\">"+
-                    "<input type=\"submit\" value=\"Login\" class=\"cform-submit\"></span> </div></div>";
+                    "<input type=\"submit\" value=\"Login\" id=\"login-submit\" name=\"login-submit\" class=\"cform-submit\"></span> </div></div>";
 			document.getElementById('register-form').innerHTML = inhtml;
 			document.getElementById('register-form').action="Login";
 			
