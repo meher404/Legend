@@ -48,7 +48,6 @@ public class User {
 		return name;
 	}
 
-	@SuppressWarnings("static-access")
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -57,7 +56,6 @@ public class User {
 		return userID;
 	}
 
-	@SuppressWarnings("static-access")
 	public void setUserID(String userID) {
 		this.userID = userID;
 	}
@@ -66,7 +64,6 @@ public class User {
 		return email;
 	}
 
-	@SuppressWarnings("static-access")
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -75,7 +72,6 @@ public class User {
 		return pwd;
 	}
 
-	@SuppressWarnings("static-access")
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
@@ -84,7 +80,6 @@ public class User {
 		return phne;
 	}
 
-	@SuppressWarnings("static-access")
 	public void setPhne(long phne) {
 		this.phne = phne;
 	}
@@ -93,7 +88,6 @@ public class User {
 		return addressID;
 	}
 
-	@SuppressWarnings("static-access")
 	public void setAddressID(int addressID) {
 		this.addressID = addressID;
 	}
@@ -102,7 +96,6 @@ public class User {
 		return gender;
 	}
 
-	@SuppressWarnings("static-access")
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
@@ -111,7 +104,6 @@ public class User {
 		return dob;
 	}
 
-	@SuppressWarnings("static-access")
 	public void setDob(Date dob) {
 		this.dob = dob;
 	}
@@ -145,7 +137,6 @@ public class User {
 		return uid;
 	}
 
-	@SuppressWarnings("static-access")
 	public void insertUser(){
 		try {
 			db=new DBConnection();
@@ -178,7 +169,6 @@ public class User {
 	
 	
 
-	@SuppressWarnings({ "static-access", "unchecked" })
 	public HashMap<Product, Integer> getCart(){
 		Cart cart=new Cart();
 		try {
@@ -236,7 +226,6 @@ public class User {
 		}
 	}
 
-	@SuppressWarnings("static-access")
 	public Address getAddress(int addressID){
 		try {
 			db=new DBConnection();
@@ -291,7 +280,7 @@ public class User {
 		ArrayList<OrderDetails> od=new ArrayList<OrderDetails>();
 
 		rs=st.executeQuery("select * from orderdetails where userid='"+userID+"';");
-		int i=0;
+	//	int i=0;
 		while(rs.next()){
 			String saleid=rs.getString("saleid");
 			String pid=rs.getString("pid");

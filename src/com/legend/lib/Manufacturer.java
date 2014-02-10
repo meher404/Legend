@@ -23,21 +23,19 @@ public class Manufacturer
 	public int getManufactureID() {
 		return manufactureID;
 	}
-	@SuppressWarnings("static-access")
+	
 	public void setManufactureID(int manufactureID) {
 		this.manufactureID = manufactureID;
 	}
 	public String getManufacturerName() {
 		return manufacturerName;
 	}
-	@SuppressWarnings("static-access")
 	public void setManufacturerName(String manufacturerName) {
 		this.manufacturerName = manufacturerName;
 	}
 	public String getManfDescription() {
 		return manfDescription;
 	}
-	@SuppressWarnings("static-access")
 	public void setManfDescription(String manfDescription) {
 		this.manfDescription = manfDescription;
 	}

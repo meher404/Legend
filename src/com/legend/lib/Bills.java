@@ -59,7 +59,16 @@ public class Bills {
 		this.DeliveryStatus = deliveryStatus;
 	}
 	
-	static double calculateTotal(String saleid){
+	public double calculateTotal(String saleid)
+	{
+		try {
+			db=new DBConnection();
+			con=db.getConnection();
+			st = con.createStatement();
+			stmt=con.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		double total=0;
 		try {
 			rs=st.executeQuery("select pid from orderdetails where saleid='"+saleid+"';");
