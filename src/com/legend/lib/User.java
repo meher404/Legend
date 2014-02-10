@@ -180,16 +180,16 @@ public class User {
 
 	@SuppressWarnings({ "static-access", "unchecked" })
 	public HashMap<Product, Integer> getCart(){
+		Cart cart=new Cart();
 		try {
 			db=new DBConnection();
 			con=db.getConnection();
 			st = con.createStatement();
-			stmt = con.createStatement();
-			stmt2 = con.createStatement();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<Product> pro=new ArrayList<Product>();
+		pro=cart.getProducts(userID);
 		int i=0;
 		HashMap<Product, Integer> hash=new HashMap<Product, Integer>();
 		Cart c=new Cart();
@@ -278,7 +278,7 @@ public class User {
 	}
 
 	
-	public ArrayList<OrderDetails> getOrders(String userid) throws SQLException{
+	public ArrayList<OrderDetails> getOrders() throws SQLException{
 		try {
 			db=new DBConnection();
 			con=db.getConnection();
@@ -290,7 +290,7 @@ public class User {
 		}
 		ArrayList<OrderDetails> od=new ArrayList<OrderDetails>();
 
-		rs=st.executeQuery("select * from orderdetails where userid='"+userid+"';");
+		rs=st.executeQuery("select * from orderdetails where userid='"+userID+"';");
 		int i=0;
 		while(rs.next()){
 			String saleid=rs.getString("saleid");
@@ -300,13 +300,13 @@ public class User {
 			order.setPid(pid);
 			order.setQuantity(quantity);
 			order.setSaleid(saleid);
-			order.setUserId(userid);
+			order.setUserId(userID);
 			od.add(order);
 		}
 		return od;
 	}
 
-	public ArrayList<Bills> getBills(String userid) throws SQLException{
+	public ArrayList<Bills> getBills() throws SQLException{
 		try {
 			db=new DBConnection();
 			con=db.getConnection();
@@ -318,7 +318,7 @@ public class User {
 		}
 		ArrayList<Bills> bills=new ArrayList<Bills>();
 		Vector<String> v=new Vector<String>();
-		rs1=stmt.executeQuery("select saleid from orderdetails where userid='"+userid+"';");
+		rs1=stmt.executeQuery("select saleid from orderdetails where userid='"+userID+"';");
 		while(rs1.next()){
 			String saleid=rs1.getString("saleid");
 			if(!v.contains(saleid)){

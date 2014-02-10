@@ -8,10 +8,10 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="C:/Users/singam1/workspace/mail.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.50/lib/servlet-api.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.50/lib/mysql-connector-java-5.1.28-bin.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 6.0/lib/itextpdf-5.4.5.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 6.0/lib/mysql-connector-java-5.1.22-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 6.0/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="D:/mail.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
