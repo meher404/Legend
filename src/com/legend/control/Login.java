@@ -37,10 +37,12 @@ public class Login extends HttpServlet {
 		
 		helpFunctions help=new helpFunctions();
 		HttpSession ss= request.getSession();
+		
 		ss.setAttribute("email", email);
 		if(help.checkStatus(email)){
 			if(help.Login(email, password)){
 				System.out.println("Login Success");
+				ss.setAttribute("user", help.getFilledUser(email));
 				RequestDispatcher rd=request.getRequestDispatcher("index.html");
 				rd.include(request, response);
 			}

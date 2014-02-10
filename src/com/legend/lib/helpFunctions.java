@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class helpFunctions {
@@ -32,7 +33,31 @@ public class helpFunctions {
 			e.printStackTrace();
 		}
 	}
-
+	
+	
+	public User getFilledUser(String email){
+		HashMap<Product, Integer> cart=new HashMap<Product, Integer>();
+		ArrayList<Bills> bills=new ArrayList<Bills>();
+		ArrayList<OrderDetails> orders=new ArrayList<OrderDetails>();
+		UserObject userObj=new UserObject();
+		
+		User user=new User();
+		user=userObj.userObject(email);
+		try {
+			bills=user.getBills();
+			orders=user.getOrders();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		cart=user.getCart();
+		
+		user.bills = bills;
+		user.cart = cart;
+		user.orders = orders;
+		
+		return user;
+	}
+	
 	public static boolean Login(String email,String pwd){
 		String encryptedPwd,status = "";
 		CaesarCipher cd=new CaesarCipher();

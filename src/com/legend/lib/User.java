@@ -43,7 +43,12 @@ public class User {
 	private int addressID;
 	private String gender;
 	private Date dob;
-
+	public HashMap<Product, Integer> cart;
+	public ArrayList<Bills> bills;
+	public ArrayList<OrderDetails> orders;
+	
+	
+	
 	public String getName() {
 		return name;
 	}

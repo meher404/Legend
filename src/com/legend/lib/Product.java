@@ -270,6 +270,28 @@ public class Product {
 		}
 		return prod;
 	}
+	
+	public String toCartString(int qty){
+		String prod;
+		try {
+			prod = "<div class=\"span4\">"+
+					"<div class=\"mask2\" onclick=\"unHide('"+PID+"')\"><a href='"+imagesrc+"' rel='prettyPhoto'><img width='225' height='225' src=\""+imagesrc+"\" alt=\"\"></a></div>"+
+					"<div class=\"inside\" id=\""+PID+"_1\" name=\""+PID+"_1\">"+
+					"<hgroup><h4>"+pName+"</h4></hgroup>"+
+					"<div class=\"entry-content\">"+
+					"<table class=\"table\">"+
+					"<tr><td>Name: </td><td>"+pName+"</td></tr>"+
+					"<tr><td>Price: </td><td>Rs. "+price+"</td></tr>"+
+					"<tr><td>Category: </td><td>"+getCategory(categoryID).getCategoryName()+"</td></tr>"+
+					"<tr><td>Quantity: </td><td>"+qty+"</td></tr>"+
+					"<tr><td><h4>Total: </h4></td><td><h3>Rs. "+(qty*price)+"</h3></td></tr>"+
+					"</table>"+
+					"</div></div></div>";
+		} catch (SQLException e) {
+			return "Product failed to load";
+		}
+		return prod;
+	}
 
 }
 

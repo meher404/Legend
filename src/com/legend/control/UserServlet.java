@@ -37,19 +37,24 @@ public class UserServlet extends HttpServlet {
 		ArrayList<Bills> bills=new ArrayList<Bills>();
 		ArrayList<OrderDetails> orders=new ArrayList<OrderDetails>();
 		UserObject userObj=new UserObject();
-		PrintWriter out=response.getWriter();
+		//PrintWriter out=response.getWriter();
 		response.setContentType("text/html");
-		String email=request.getParameter("email");
+		String email=(String)request.getSession().getAttribute("email");
 		User user=new User();
 		user=userObj.userObject(email);
 		try {
 			bills=user.getBills();
 			orders=user.getOrders();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		cart=user.getCart();
+		
+		user.bills = bills;
+		user.cart = cart;
+		user.orders = orders;
+		
+		request.getSession().setAttribute("user_object",user);
 		
 	}
 
