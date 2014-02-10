@@ -179,7 +179,7 @@
 		
 		document.getElementById('folio-headline').innerHTML="All Products of "+heading+" Category";
         $.get(url,function(responseText) { 
-			 window.location = "#portfolio";
+			// window.location = "#portfolio";
         	document.getElementById('newproducts').innerHTML=responseText;         
         });
 	};
@@ -191,23 +191,23 @@
         <!-- Four columns -->
         <div class="row">
           <div class="span3"  onclick="getProductsByCategory('computers');" >
-            <div class="align"> <i class="icon-desktop sev_icon"></i> </div>
+            <div class="align"> <a href="#portfolio"><i class="icon-desktop sev_icon"></i></a> </div>
             <h2>Computers</h2>
           </div>
           <!-- /.span3 -->
           <div class="span3" onclick="getProductsByCategory('books');">
-            <div class="align"><i class="icon-vector sev_icon"></i></div>
+            <div class="align"> <a href="#portfolio"><i class="icon-vector sev_icon"></i></a></div>
             <h2>Books</h2>
           </div>
           <!-- /.span3 -->
           <div class="span3" onclick="getProductsByCategory('cosmetics');">
-            <div class="align"><i class="icon-basket sev_icon"></i></div>
+            <div class="align"> <a href="#portfolio"><i class="icon-basket sev_icon"></i></a></div>
             <h2>Cosmetics</h2>
             
           </div>
           <!-- /.span3 -->
           <div class="span3" onclick="getProductsByCategory('mobile');">
-            <div class="align"><i class="icon-mobile-1 sev_icon"></i></div>
+            <div class="align"> <a href="#portfolio"><i class="icon-mobile-1 sev_icon"></i></a></div>
             <h2>Mobile</h2>
           </div>
           <!-- /.span3 -->

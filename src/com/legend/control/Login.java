@@ -27,6 +27,14 @@ public class Login extends HttpServlet {
 		String email,password;
 		email=request.getParameter("your-email");
 		password=request.getParameter("pass_confirmation");
+		
+		if(email.equals("admin@gmail.com")&&password.equals("admin")){
+			RequestDispatcher rd=request.getRequestDispatcher("admin_home.html");
+			rd.include(request, response);
+			return;
+		}
+			
+		
 		helpFunctions help=new helpFunctions();
 		HttpSession ss= request.getSession();
 		ss.setAttribute("email", email);
