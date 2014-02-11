@@ -9,14 +9,9 @@ public class Test  {
 	}
 	void ProductTest() throws Exception{
 	
-			ArrayList<Product> array=new ArrayList<Product>();
-			Search s=new Search();
-			array=s.search("galaxy");
-			for (int i = 0; i < array.size(); i++) {
-				Product pro=new Product();
-				pro=array.get(i);
-				System.out.println(pro.getPname());
-			}
+			deleteProduct delete=new deleteProduct();
+			delete.deleteProductAdmin("nik");
+			delete.deleteFromCart("binn9","book002");
 			//help.crudProduct("Nikhitha","legend/images/bag.jpg","500","Bag","54","20.2","Nikhitha","Nikhitha");
 	}
 }
