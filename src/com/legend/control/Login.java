@@ -39,25 +39,28 @@ public class Login extends HttpServlet {
 		HttpSession ss= request.getSession();
 		
 		ss.setAttribute("email", email);
-		if(help.checkStatus(email)){
-			if(help.Login(email, password)){
+		
+		if(help.Login(email, password)){
+			if(help.checkStatus(email))
+			{
 				System.out.println("Login Success");
 				ss.setAttribute("user", help.getFilledUser(email));
 				RequestDispatcher rd=request.getRequestDispatcher("index.html");
 				rd.include(request, response);
 			}
 			else{
-				System.out.println("failed");
-				HttpSession ss1=request.getSession(false);
-				ss1.invalidate();
+				System.out.println("Not-Active");
+				RequestDispatcher rd=request.getRequestDispatcher("activate.html");
+				rd.include(request, response);
 			}
 		}
 		else{
-			System.out.println("Not-Active");
-			RequestDispatcher rd=request.getRequestDispatcher("activate.html");
-			rd.include(request, response);
+			System.out.println("failed");
+			HttpSession ss1=request.getSession(false);
+			ss1.invalidate();
 		}
-
+		
+		
 	}
 
 }
