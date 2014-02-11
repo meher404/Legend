@@ -33,14 +33,14 @@ public class helpFunctions {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	public User getFilledUser(String email){
 		HashMap<Product, Integer> cart=new HashMap<Product, Integer>();
 		ArrayList<Bills> bills=new ArrayList<Bills>();
 		ArrayList<OrderDetails> orders=new ArrayList<OrderDetails>();
 		UserObject userObj=new UserObject();
-		
+
 		User user=new User();
 		user=userObj.userObject(email);
 		try {
@@ -50,14 +50,14 @@ public class helpFunctions {
 			e.printStackTrace();
 		}
 		cart=user.getCart();
-		
+
 		user.bills = bills;
 		user.cart = cart;
 		user.orders = orders;
-		
+
 		return user;
 	}
-	
+
 	public static boolean Login(String email,String pwd){
 		String encryptedPwd,status = "";
 		CaesarCipher cd=new CaesarCipher();
@@ -164,6 +164,7 @@ public class helpFunctions {
 		try {
 			Category c= new Category();
 			Manufacturer m= new Manufacturer();
+			System.out.println(catName);
 			int categoryId=c.generateCategoryID(catName);
 			int manufacturerId=m.generatemanufactureID(manName);
 			Product p=new Product();
@@ -189,44 +190,45 @@ public class helpFunctions {
 				int rating=rs.getInt("rating");
 				//	System.out.println("From main : "+PID+"\nFrom database: "+proId);
 
-				if(proId.equals(PID)){
-					flag=true;
-					//	System.out.println("Product exists");
-					if(name.equals("")){
-						name=pname;
-					}
-					if(description.equals("")){
-						description=pdescription;
-					}
-					if(imagepath.equals("")){
-						imagepath=pimg;
 
-					}
-					if(price.equals(""))
-					{
-						price1=pprice;
-					}
-					else
-					{
-						price1=Double.parseDouble(price);
-					}
-					if(quantity.equals(""))
-					{
-						quantity1=pquantity;
-					}
-					else
-					{
-						quantity1=Integer.parseInt(quantity);
-					}
-					if(discount.equals(""))
-					{
-						discount1=pdiscount;
-					}
-					else
-					{
-						discount1=Double.parseDouble(discount);
-						System.out.println("discount1: "+discount1);
-					}
+				flag=true;
+				//	System.out.println("Product exists");
+				if(name.equals("")){
+					name=pname;
+				}
+				if(description.equals("")){
+					description=pdescription;
+				}
+				if(imagepath.equals("")){
+					imagepath=pimg;
+
+				}
+				if(price.equals(""))
+				{
+					price1=pprice;
+				}
+				else
+				{
+					price1=Double.parseDouble(price);
+				}
+				if(quantity.equals(""))
+				{
+					quantity1=pquantity;
+				}
+				else
+				{
+					quantity1=Integer.parseInt(quantity);
+				}
+				if(discount.equals(""))
+				{
+					discount1=pdiscount;
+				}
+				else
+				{
+					discount1=Double.parseDouble(discount);
+					//System.out.println("discount1: "+discount1);
+				}
+				if(proId.equals(PID)){
 					String sql        = "UPDATE product SET name = ?,image=?,price=?,quantity=?,description=?,discount=? "
 							+ " WHERE pid = ?";
 					PreparedStatement pst = con.prepareStatement(sql);
@@ -241,7 +243,7 @@ public class helpFunctions {
 				}
 			}
 			if(flag==false){
-				prep=con.prepareStatement("insert into product values(?,?,?,?,?,?,?,?,?,?);");
+				prep=con.prepareStatement("insert into product values(?,?,?,?,?,?,?,?,?,?,?);");
 				prep.setString(1,name);
 				prep.setString(2, PID);
 				prep.setString(3,imagepath);
@@ -252,6 +254,7 @@ public class helpFunctions {
 				prep.setInt(8,4);
 				prep.setDouble(9,discount1);
 				prep.setInt(10,categoryId);
+				prep.setString(11,"active");
 				prep.executeUpdate();
 			}
 		} catch (SQLException e) {
@@ -285,7 +288,7 @@ public class helpFunctions {
 		}
 		return array;
 	}
-	
+
 	public ArrayList<Product> getNewProducts(){
 		ArrayList<Product> array=new ArrayList<Product>();
 		try {
@@ -312,7 +315,7 @@ public class helpFunctions {
 		}
 		return array;
 	}
-	
+
 	public boolean CheckProduct(String pname){
 		try {
 			st=con.createStatement();
@@ -330,7 +333,7 @@ public class helpFunctions {
 		}
 		return false;
 	}
-	
+
 	public String existingPID(String pname){
 		String pid="";
 		try {
@@ -345,7 +348,7 @@ public class helpFunctions {
 		}
 		return pid;
 	}
-	
+
 	public String getManufactureName(int manufactureID){
 		db=new DBConnection();
 		con=db.getConnection();
@@ -361,7 +364,7 @@ public class helpFunctions {
 		}
 		return name;
 	}
-	
+
 	public String getCategoryName(int CategoryID){
 		db=new DBConnection();
 		con=db.getConnection();

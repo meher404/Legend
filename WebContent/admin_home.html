@@ -134,29 +134,18 @@
 				<div id="regBg" style=" opacity:0.68; height:643px; display:block" onclick="hide()"></div>
 				<!-- <div id="main" style="position: absolute;top:30px;left: 275px;"> -->
 				<div id="main" style="position: absolute;top:30px;left:275px;>
-					<form name="form_update_product" id="form_update_product" enctype="multipart/form-data" method="POST">
+					
 						<center>
 						<h3> <b id="title_add_OR_update">Add Product Form</b></h3>
 						</center>
 						<fieldset name="add_OR_update_ProductForm" style="margin:auto; width:600px;  ">
             <div id="show2" height="200"> </div>
+            <form name="form_update_product" id="form_update_product" enctype="multipart/form-data" action="AddOrUpdateProduct" method="POST">
             <table align="center" cellpadding="7" width="70%">
               <tbody>
                 <tr>
                   <td>Category:<font color="red"> *</font></td>
-                  <td>
-                    <select name="category" id="category" required="" onchange="fillProdID()">
-                      <option>--select--</option>
-                      <option>Mobile</option>
-                      <option>Computers</option>
-					  <option>Books</option>
-                      <option>Cosmetics</option>
-                    </select>
-                  </td>
-                </tr>
-                <tr>
-                  <td>ProductID:<font color="red"> *</font></td>
-                  <td><input name="pid" id="pid"  placeholder="PID"  type="text" required="" disabled><span style="color: black;" id="error00"> </span></td>
+                  <td><input name="category" id="category" size="30" placeholder="Category name" required=""><span style="color: red;" id="error"> </span></td>
                 </tr>
                 <tr>
                   <td>Product Name:<font color="red"> *</font></td>
@@ -164,7 +153,11 @@
                 </tr>
                 <tr>
                   <td>Manufacturer Name:<font color="red"> *</font></td>
-                  <td><input name="mfgname" id="mfgname" size="30" placeholder="Last name" required=""> <span style="color: red;" id="error000"> </span></td>
+                  <td><input name="mfgname" id="mfgname" size="30" placeholder="Manufacturer name" required=""> <span style="color: red;" id="error000"> </span></td>
+                </tr>
+				 <tr>
+                  <td>ProductID:<font color="red"> *</font></td>
+                  <td><input name="pid" id="pid"  placeholder="PID"  type="text" required="" disabled><span style="color: black;" id="error00"> </span></td>
                 </tr>
 				<tr>
                   <td>Image:<font color="red"> *</font></td>
@@ -195,9 +188,9 @@
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </table></form>
           </fieldset>
-					</form>
+					
 				</div>
 			</div>
 			<div class="mask2" onclick="unHide('t1')"> <!--<a href="img/products/samsung-s4.jpg" rel="prettyPhoto">--><img src="img/products/samsung-s4.jpg" alt=""></a> </div>
@@ -269,24 +262,24 @@
         <h1>Reports</h1>
         <!-- Four columns -->
         <div class="row">
-          <div class="span3" onclick="window.open('ReportDetail?cat=comp','_parent');" >
+          <div class="span3" onclick="window.open('ReportDetail?cat=product','_blank');" >
             <div class="align"> <i class="icon-desktop sev_icon"></i> </div>
-            <h2>Computers</h2>
+            <h2>Report by Product</h2>
           </div>
           <!-- /.span3 -->
-          <div class="span3" onclick="window.open('ReportDetail?cat=book','_parent');">
+          <div class="span3" onclick="window.open('ReportDetail?cat=category','_blank');">
             <div class="align"> <i class="icon-vector sev_icon"></i> </div>
-            <h2>Books</h2>
+            <h2>Report by Category</h2>
           </div>
           <!-- /.span3 -->
-          <div class="span3" onclick="window.open('ReportDetail?cat=cosm','_parent');">
+          <div class="span3" onclick="window.open('ReportDetail?cat=month','_blank');">
             <div class="align"> <i class="icon-basket sev_icon"></i> </div>
-            <h2>Cosmetics</h2>
+            <h2>Monthly Report</h2>
           </div>
           <!-- /.span3 -->
-          <div class="span3" onclick="window.open('ReportDetail?cat=mob','_parent');">
+          <div class="span3" onclick="window.open('ReportDetail?cat=year','_blank');">
             <div class="align"> <i class="icon-mobile-1 sev_icon"></i> </div>
-            <h2>Mobile</h2>
+            <h2>Yearly Report</h2>
           </div>
           <!-- /.span3 -->
         </div>

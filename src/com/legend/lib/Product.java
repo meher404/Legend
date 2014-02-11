@@ -212,7 +212,7 @@ public class Product {
 		st = con.createStatement();
 
 		try {
-			prep = con.prepareStatement("insert into product VALUES(?,?,?,?,?,?,?,?,?,?);");
+			prep = con.prepareStatement("insert into product VALUES(?,?,?,?,?,?,?,?,?,?,?);");
 			prep.setString(1,pName);
 			prep.setString(2, PID);
 			prep.setString(3,imagesrc); 
@@ -223,6 +223,7 @@ public class Product {
 			prep.setInt(8, rating);
 			prep.setDouble(9,discount); 
 			prep.setInt(10,categoryID);
+			prep.setString(11,"active");
 			prep.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
