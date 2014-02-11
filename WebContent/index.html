@@ -47,9 +47,18 @@
           });
 		function unHide(val){
 			document.getElementById("regDiv").style.display = "block";
-			var inhtml = document.getElementById(val).innerHTML+"<h1>Hello</h1>";
-			console.log(document.getElementById(val).innerHTML);
-			document.getElementById("form_add_to_cart").innerHTML = inhtml;
+			 var url = 'AddToCartForm?PID='+val;
+			 console.log(url);
+			 $.get(url,function(inhtml) {
+				 console.log("form resp: "+inhtml);
+				 if(inhtml==""){
+					 hide();
+					 window.location='#contact';
+				  }
+				 else
+					document.getElementById("form_add_to_cart").innerHTML=inhtml;
+			});
+			
 		}
 
 		function hide(){
@@ -135,7 +144,6 @@
     
 	<!--******************** New Products Section ********************-->
      <script>
-     
 	$(document).ready(function() {                        
         $.get('getNewProducts',function(responseText) { 
         	document.getElementById('folio-headline').innerHTML="New Products";
@@ -149,14 +157,13 @@
 	        });
 	};
 	</script>
-	
 	<section id="portfolio" class="single-page scrollblock">
       <div class="container">
        
         <h1 id="folio-headline">New Products</h1>
 			<div id="regDiv" style="display : none;">
 				<div id="regBg" style=" opacity:0.68; height:643px; display:block" onclick="hide()"></div>
-				<div id="main" style="position: absolute;top:30px;left: 400px;"><form id="form_add_to_cart" name="form_add_to_cart"></form></div>
+				<div id="main" style="position: absolute;top:30px;left: 400px;"><form id="form_add_to_cart" name="form_add_to_cart" action="AddToCart"></form></div>
 			</div>
 		
 		<div class="row" id="newproducts" >
@@ -246,24 +253,44 @@
     	document.getElementById('name_insert').innerHTML=name.valueOf();
     	console.log(name);
     	 $.get('GetProducts',function(html) { 
-    		 document.getElementById('mycartproducts').innerHTML=html;
-    		 console.log(html);
+			if(html==""){
+				document.getElementById('mycartproducts').innerHTML="<h2>No Items in Cart</h2>";
+				document.getElementById('purchase_button').style.display='none';
+			}
+			else{
+				document.getElementById('mycartproducts').innerHTML=html;
+				document.getElementById('purchase_button').style.display='';
+			}
+    		 
     	 });
     };
+	/*function editProd(pid){
+		unHide(pid);
+	};*/
+	function deleteProd(pid){
+		console.log(pid);
+		var url = 'DeleteProductFromCart?PID='+pid;
+		
+	};
 	</script>
 	<section id="news" class="single-page scrollblock" style="display:none" >
       <div class="container" id="mycart" >
         <div class="align"><i class="icon-pencil-circled"></i></div>
         <h1><span id="name_insert"></span>'s Cart</h1>
+        <div id="regDiv" style="display : none;">
+				<div id="regBg" style=" opacity:0.68; height:643px; display:block" onclick="hide()"></div>
+				<div id="main" style="position: absolute;top:30px;left: 400px;"><form id="form_add_to_cart" name="form_add_to_cart" action="AddToCart"></form></div>
+		</div>
         <!-- If the user is logged in, we should show his cart, or else hide this div -->
        <div class="row" id="mycartproducts">
          
           
        </div>
-        <!-- /.row -->
+        
       </div>
-        <!-- /.row -->
-         
+        
+          <div id="purchase_button"><a href="purchase_cart.html#contact" target="_blank" class="btn btn-large">Purchase</a> </div>
+
     
     </section>
     

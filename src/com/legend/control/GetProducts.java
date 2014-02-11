@@ -48,7 +48,7 @@ public class GetProducts extends HttpServlet {
 			for(Product p : map.keySet()){
 				out.println(p.toCartString(map.get(p)));
 			}
-			out.println("<a href=\"purchase_cart.html#contact\" target=\"_blank\" class=\"btn btn-large\">Purchase</a>");
+			
 			return;
 		}
 	}

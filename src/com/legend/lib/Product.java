@@ -275,7 +275,7 @@ public class Product {
 		String prod;
 		try {
 			prod = "<div class=\"span4\">"+
-					"<div class=\"mask2\" onclick=\"unHide('"+PID+"')\"><a href='"+imagesrc+"' rel='prettyPhoto'><img width='225' height='225' src=\""+imagesrc+"\" alt=\"\"></a></div>"+
+					"<div class=\"mask2\"><a href='"+imagesrc+"' rel='prettyPhoto'><img width='225' height='225' src=\""+imagesrc+"\" alt=\"\"></a></div>"+
 					"<div class=\"inside\" id=\""+PID+"_1\" name=\""+PID+"_1\">"+
 					"<hgroup><h4>"+pName+"</h4></hgroup>"+
 					"<div class=\"entry-content\">"+
@@ -285,7 +285,33 @@ public class Product {
 					"<tr><td>Category: </td><td>"+getCategory(categoryID).getCategoryName()+"</td></tr>"+
 					"<tr><td>Quantity: </td><td>"+qty+"</td></tr>"+
 					"<tr><td><h4>Total: </h4></td><td><h3>Rs. "+(qty*price)+"</h3></td></tr>"+
+					"<tr><td><a onclick=\"unHide('"+PID+"')\"><img height='40' width='40' src=\"img/edit.png\" />EDIT Product</a></td><td><a onclick=\"deleteProd('"+PID+"')\"><img height='40' width='40' src=\"img/delete.jpg\" />REMOVE Product</a></td></tr>"+
 					"</table>"+
+					"</div></div></div>";
+		} catch (SQLException e) {
+			return "Product failed to load";
+		}
+		return prod;
+	}
+	
+	public String AddToCartString(){
+		String prod;
+		try {
+			prod = "<div class=\"span4\">"+
+					"<div class=\"mask2\" \"><a href='"+imagesrc+"' target='_blank'><img width='150' height='150' src=\""+imagesrc+"\" alt=\"\"></a></div>"+
+					"<div class=\"inside\" id=\""+PID+"_1\" name=\""+PID+"_1\">"+
+					"<hgroup><h4>"+pName+"</h4></hgroup>"+
+					"<div class=\"entry-content\">"+
+					"<table class=\"table\">"+
+					"<tr><td>Name: </td><td>"+pName+"</td></tr>"+
+					"<tr><td>Price: </td><td>Rs. <span id=\"price\">"+price+"</span></td></tr>"+
+					"<tr><td>Discription: </td><td>"+description+"</td></tr>"+
+					"<tr><td>Category: </td><td>"+getCategory(categoryID).getCategoryName()+"</td></tr>"+
+					"<tr><td>Manufacturer: </td><td>"+getManufacturer(manufactureID).getManufacturerName()+"</td></tr>"+
+					"<tr><td>Quantity: </td><td><input type=\"text\" class='span2' name=\"qty\" id=\"qty\" maxlength=\"4\" data-validation=\"number\" data-validation-error-msg=\"Invalid Quantity value\"  /></td></tr>"+
+					"</table>"+
+					"<input type=\"hidden\" name=\"pid\" value='"+PID+"' />"+
+					"<div class='span2' align='center'><input type='submit' value='ADD' /></div>"+
 					"</div></div></div>";
 		} catch (SQLException e) {
 			return "Product failed to load";
