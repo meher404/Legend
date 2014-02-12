@@ -286,7 +286,7 @@ public class Product {
 					"<tr><td>Category: </td><td>"+getCategory(categoryID).getCategoryName()+"</td></tr>"+
 					"<tr><td>Quantity: </td><td>"+qty+"</td></tr>"+
 					"<tr><td><h4>Total: </h4></td><td><h3>Rs. "+(qty*price)+"</h3></td></tr>"+
-					"<tr><td><a onclick=\"unHide('"+PID+"')\"><img height='40' width='40' src=\"img/edit.png\" />EDIT Product</a></td><td><a onclick=\"deleteProd('"+PID+"')\"><img height='40' width='40' src=\"img/delete.jpg\" />REMOVE Product</a></td></tr>"+
+					"<tr><td><a onclick=\"retrieveDetails('"+PID+"')\"><img height='40' width='40' src=\"img/edit.png\" />EDIT Product</a></td><td><a onclick=\"deleteProd('"+PID+"')\"><img height='40' width='40' src=\"img/delete.jpg\" />REMOVE Product</a></td></tr>"+
 					"</table>"+
 					"</div></div></div>";
 		} catch (SQLException e) {

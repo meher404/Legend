@@ -46,9 +46,9 @@ public class User {
 	public HashMap<Product, Integer> cart;
 	public ArrayList<Bills> bills;
 	public ArrayList<OrderDetails> orders;
-	
-	
-	
+
+
+
 	public String getName() {
 		return name;
 	}
@@ -171,8 +171,8 @@ public class User {
 			e.printStackTrace();
 		} 
 	}
-	
-	
+
+
 
 	public HashMap<Product, Integer> getCart(){
 		Cart cart=new Cart();
@@ -213,7 +213,7 @@ public class User {
 
 	}
 
-	
+
 	public void deleteUser(){
 		try {
 			db=new DBConnection();
@@ -271,7 +271,7 @@ public class User {
 		return encryptedPwd;
 	}
 
-	
+
 	public ArrayList<OrderDetails> getOrders() throws SQLException{
 		try {
 			db=new DBConnection();
@@ -285,7 +285,7 @@ public class User {
 		ArrayList<OrderDetails> od=new ArrayList<OrderDetails>();
 
 		rs=st.executeQuery("select * from orderdetails where userid='"+userID+"';");
-	//	int i=0;
+		//	int i=0;
 		while(rs.next()){
 			String saleid=rs.getString("saleid");
 			String pid=rs.getString("pid");
@@ -323,7 +323,7 @@ public class User {
 			}
 			rs2=stmt2.executeQuery("select * from bills where saleid='"+saleid+"';");
 			if(rs2.next()){
-			
+
 				Bills bill=new Bills();
 				java.util.Date timeStamp=rs2.getDate("timeStamp");
 				int addId=rs2.getInt("addressID");
