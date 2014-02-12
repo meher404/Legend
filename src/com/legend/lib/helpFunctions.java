@@ -1,6 +1,5 @@
 package com.legend.lib;
 
-//package com.legend.lib;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -266,7 +265,7 @@ public class helpFunctions {
 		ArrayList<Product> array=new ArrayList<Product>();
 		try {
 			st=con.createStatement();
-			rs=st.executeQuery("select * from product where categoryid='"+catId+"';");
+			rs=st.executeQuery("select * from product where categoryid='"+catId+"' and status=\"active\";");
 			while(rs.next())
 			{
 				Product pro=new Product();
@@ -293,7 +292,7 @@ public class helpFunctions {
 		ArrayList<Product> array=new ArrayList<Product>();
 		try {
 			st=con.createStatement();
-			rs=st.executeQuery("select * from product limit 3;");
+			rs=st.executeQuery("select * from product where status=\"active\"  limit 3;");
 			while(rs.next())
 			{
 				Product pro=new Product();
@@ -337,6 +336,7 @@ public class helpFunctions {
 	public String existingPID(String pname){
 		String pid="";
 		try {
+			
 			st=con.createStatement();
 			rs=st.executeQuery("select pid from product where name='"+pname+"';");
 			if(rs.next()){
@@ -379,6 +379,34 @@ public class helpFunctions {
 			e.printStackTrace();
 		}
 		return name;
+	}
+	
+	public static Product getProduct(String pid){
+		Product pro=new Product();
+		try {
+			db=new DBConnection();
+			con=db.getConnection();
+			st = con.createStatement();
+			//st=con.createStatement();
+			rs1=st.executeQuery("select * from product where pid='"+pid+"';");
+			rs1.next();
+			
+			pro.setPname(rs1.getString("name"));
+			pro.setCategoryID(rs1.getInt("categoryid"));
+			pro.setDescription(rs1.getString("description"));
+			pro.setImagesrc(rs1.getString("image"));
+			pro.setDiscount(rs1.getDouble("discount"));
+			pro.setManufactureID(rs1.getInt("manufactureid"));
+			pro.setPID(pid);
+			pro.setPrice(rs1.getDouble("price"));
+			pro.setQuantity(rs1.getInt("quantity"));
+			pro.setRating(rs1.getInt("rating"));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return pro;
 	}
 
 }

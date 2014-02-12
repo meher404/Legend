@@ -156,5 +156,40 @@ public class Cart {
 		}
 		return products;
 	}
+	
+	public boolean crudCart(Product p,int quantity)
+	{
+		try {
+			db=new DBConnection();
+			con=db.getConnection();
+			st = con.createStatement();
+			stmt=con.createStatement();
+		
+			boolean validate;
+			pid=p.getPID();
+			validate=helpFunctions.CheckProductQuantity(pid, quantity);
+			if(!validate)
+			{
+				return false;
+			}
+			rs=st.executeQuery("select * from cart where pid='"+pid+"'and userid='"+uid+"';");
+			if(rs.next())
+			{
+				stmt.executeUpdate("update cart set quantity='"+quantity+"'where pid='"+pid+"'and userid='"+uid+"';");
+				helpFunctions.updateProductQuantity(pid,quantity);
+				return true;
+			}
+			prep = con.prepareStatement("insert into cart values(?,?,?);");
+			prep.setString(1,uid);
+			prep.setString(2,pid);
+			prep.setInt(3,quantity);
+			helpFunctions.updateProductQuantity(pid,quantity);
+			prep.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
 
 }
