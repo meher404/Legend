@@ -92,10 +92,21 @@ public class AddOrUpdateProduct extends HttpServlet {
 					if(fi.getFieldName().equals("disc"))
 						disc=fi.getString();
 					category = category.toLowerCase();
+					
 					fileSavePath = request.getServletContext().getRealPath("");
 					fileSavePath =fileSavePath+"/img/products/"+category+"/"; //+  File.separator;
 					path="img/products/"+category+"/"+fileName;
 					System.out.println(path);
+					File file = new File(fileSavePath+"/img/products/"+category);
+					if(!file.exists()){
+						if(file.mkdir()){
+							System.out.println("New Dir "+category+" created.");
+						}
+						else{
+							System.out.println("Fialed to create: "+category);
+						}
+					}
+					
 					//String realPath="/images/";
 					// String fileSavePath=getServletContext().getRealPath(realPath);
 

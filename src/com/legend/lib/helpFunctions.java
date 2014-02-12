@@ -190,7 +190,7 @@ public class helpFunctions {
 				//	System.out.println("From main : "+PID+"\nFrom database: "+proId);
 
 
-				flag=true;
+			
 				//	System.out.println("Product exists");
 				if(name.equals("")){
 					name=pname;
@@ -228,6 +228,7 @@ public class helpFunctions {
 					//System.out.println("discount1: "+discount1);
 				}
 				if(proId.equals(PID)){
+					flag=true;
 					String sql        = "UPDATE product SET name = ?,image=?,price=?,quantity=?,description=?,discount=? "
 							+ " WHERE pid = ?";
 					PreparedStatement pst = con.prepareStatement(sql);
