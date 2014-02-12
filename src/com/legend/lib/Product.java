@@ -276,7 +276,7 @@ public class Product {
 		String prod;
 		try {
 			prod = "<div class=\"span4\">"+
-					"<div class=\"mask2\"><a href='"+imagesrc+"' rel='prettyPhoto'><img width='225' height='225' src=\""+imagesrc+"\" alt=\"\"></a></div>"+
+					"<div class=\"mask2\"><a onclick=\"retrieveDetails('"+PID+"')\"><img width='225' height='225' src=\""+imagesrc+"\" alt=\"\"></a></div>"+
 					"<div class=\"inside\" id=\""+PID+"_1\" name=\""+PID+"_1\">"+
 					"<hgroup><h4>"+pName+"</h4></hgroup>"+
 					"<div class=\"entry-content\">"+
@@ -299,7 +299,7 @@ public class Product {
 		String prod;
 		try {
 			prod = "<div class=\"span4\">"+
-					"<div class=\"mask2\" \"><a href='"+imagesrc+"' target='_blank'><img width='150' height='150' src=\""+imagesrc+"\" alt=\"\"></a></div>"+
+					"<div class=\"mask2\" \"><img width='150' height='150' src=\""+imagesrc+"\" alt=\"\"></a></div>"+
 					"<div class=\"inside\" id=\""+PID+"_1\" name=\""+PID+"_1\">"+
 					"<hgroup><h4>"+pName+"</h4></hgroup>"+
 					"<div class=\"entry-content\">"+

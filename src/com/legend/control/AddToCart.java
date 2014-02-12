@@ -42,6 +42,8 @@ public class AddToCart extends HttpServlet {
 		HttpSession session = request.getSession();
 		User u = (User) session.getAttribute("user");
 		response.setContentType("text/html");
+		response.setHeader("Pragma", "cache");
+		response.setHeader("Cache-Control", "private, must-revalidate");
 		PrintWriter out = response.getWriter();
 		
 		//PrintWriter out = response.getWriter();

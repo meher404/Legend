@@ -99,6 +99,18 @@
     <div id="top"></div>
 	
     <!-- ******************** HeaderWrap ********************-->
+    <script>
+    	function getSearchResults(){
+    		var word = document.getElementById('search-product').value;
+    		var url='SearchUser?searchproduct='+word;
+    		console.log("url: "+url);
+    		$.get(url,function(resp){
+    			document.getElementById('search_results_div').style.display='';
+    			document.getElementById('search_results').innerHTML=resp;
+    			window.location='#search_results';
+    		});
+    	};
+    </script>
     <div id="headerwrap">
       <header class="clearfix">
         <h1><span>Legend!</span> The new way to Shop.</h1>
@@ -106,8 +118,8 @@
           <div class="row">
             <div class="span12">
               <h2>Search for any product you want</h2>
-              <input type="text" name="search-product" placeholder="Head First Java" class="cform-text" size="40" title="Product search">
-              <input type="submit" value="Search" class="cform-submit">
+              <input type="text" id="search-product" name="search-product" onchange='getSearchResults()' placeholder="Head First Java" class="cform-text" size="40" title="Product search">
+              <input type="submit" onclick="getSearchResults()" value="Search" class="cform-submit">
             </div>
           </div>
           <div class="row">
@@ -125,23 +137,19 @@
       </header>
     </div>
     
-	<!--******************** Search Reults ******************** -->
-    <div class="scrollblock" id="search_results_div" style="visibility: hidden" >
-      <!-- fetch the search results and disply them here
-	  <section id="feature" >
-        <div class="container">
-          <div class="row">
-            <div class="span12">
-             
-            </div>
-            
-          </div>
+	<!--******************** Search Reults ******************** --> 
+    <section id="search_results_div" class="single-page scrollblock"  style="display: none">
+      <div class="container">
+       
+        <h1 id="search_headline">Search Results</h1>
+		
+		<div class="row" id="search_results" >
           
         </div>
-        
-      </section> -->
-    </div>  
-    
+        <!-- /.row -->
+      </div>
+      <!-- /.container -->
+    </section>
 	<hr>
     
 	<!--******************** New Products Section ********************-->
@@ -244,7 +252,8 @@
         		document.getElementById('news').style.display='';
         		document.getElementById('news_menu').style.display='';
         		document.getElementById('contact').style.display='none';
-        		document.getElementById('contact_menu').style.display='none';
+        		//document.getElementById('contact_menu').style.display='none';
+        		document.getElementById('contact_menu').innerHTML='<a href=\'Logout\'>Logout</a>';
         		getMyCart(responseText);
         	}
         });
@@ -274,8 +283,8 @@
 		//console.log(pid);
 		var url = 'deleteFromCart?PID='+pid;
 		$.get(url,function(response){
+			window.location=response;
 			alert('Product removed from cart.');
-			window.location='#news';
 		});
 		
 	};
@@ -334,7 +343,7 @@
 				
                   <div class="span4"> <span class="your-name">
                     <input type="text" name="your-name" placeholder="Your Name" class="cform-text" size="40" 
-					title="your name"  data-validation="custom" data-validation-regexp="^([a-z]+)$" data-validation-error-msg="Only Alphabets allowed" >
+					title="your name"  data-validation="custom" data-validation-regexp="^([A-Za-z ]+)$" data-validation-error-msg="Only Alphabets allowed" >
                     </span> </div>
                   <div class="span4"> <span class="your-email">
                     <input type="text" name="your-email" id="your-email" placeholder="Your Email" class="cform-text" size="40" title="your email" onkeyup="checkAvailability()"  onchange="checkAvailability()" data-validation="email" />

@@ -3,6 +3,7 @@ package com.legend.lib;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Shipping {
@@ -17,7 +18,7 @@ public class Shipping {
 	static ResultSet rs1=null;
 	static ResultSet rs2=null;
 	static PreparedStatement prep;	
-	
+
 	private String saleid;
 	private String recipient;
 	private String userid;
@@ -53,7 +54,21 @@ public class Shipping {
 	public void setContactNo(long contactNo) {
 		this.contactNo = contactNo;
 	}
-	
-	
-	
+
+	public void insertSaleid(){
+		try {
+			db=new DBConnection();
+			con=db.getConnection();
+			st = con.createStatement();
+			PreparedStatement prep=con.prepareStatement("insert into shipping (recipient,contactNo,addressid,userid) values(?,?,?,?);");
+			prep.setString(1,getRecipient());
+			prep.setLong(2,getContactNo());
+			prep.setInt(3,getAddressid());
+			prep.setString(4,getUserid());
+			prep.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

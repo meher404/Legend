@@ -1,9 +1,12 @@
 package com.legend.lib;
+import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class OrderDetails {
@@ -15,7 +18,7 @@ public class OrderDetails {
 	static Statement stmt = null;
 	static ResultSet rs=null;
 	static PreparedStatement prep;
-	
+
 	private String saleid;
 	private String userId;
 	private String pid;
@@ -25,7 +28,7 @@ public class OrderDetails {
 		saleid="sale001";
 	}
 
-	
+
 
 	public String getSaleid() {
 		return saleid;
@@ -52,39 +55,45 @@ public class OrderDetails {
 		this.quantity = quantity;
 	}
 
-	
+
 
 	@SuppressWarnings("static-access")
-	public boolean insertOrders(Cart c) throws SQLException{
+	public boolean insertOrders(User user) throws SQLException{
 		try {
 			db=new DBConnection();
 			con=db.getConnection();
 			st = con.createStatement();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		userId=c.getUid();
-		pid=c.getPid();
-		quantity=c.getQuantity();
-		helpFunctions help=new helpFunctions();
-		boolean validate=help.CheckProductQuantity(pid, quantity);
-		if(!validate){
-			return false;
-		}
-		try {
-			prep = con.prepareStatement("insert into orderdetails values(?,?,?,?);");
-			prep.setString(1,saleid);
-			prep.setString(2, userId);
-			prep.setString(3,pid);
-			prep.setInt(4, quantity);
-			prep.executeUpdate();
-			help.updateProductQuantity(pid, quantity);
+
+			HashMap<Product, Integer> cart=new HashMap<Product, Integer>();
+
+			cart=user.getCart();
+			String uid=user.getUserID();
+			System.out.println();
+			String saleid=helpFunctions.generateSaleid();
+			for ( Product p : cart.keySet() ) {
+
+				int quantity=cart.get(p);
+				String pid=p.getPID();
+				helpFunctions help=new helpFunctions();
+				boolean validate=help.CheckProductQuantity(pid, quantity);
+				if(!validate){
+					return false;
+				}
+
+				prep = con.prepareStatement("insert into orderdetails values(?,?,?,?);");
+				prep.setString(1,saleid);
+				prep.setString(2, uid);
+				prep.setString(3,pid);
+				prep.setInt(4, quantity);
+				prep.executeUpdate();
+				help.updateProductQuantity(pid, quantity);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return true;
 	}
 
-	
+
 
 }

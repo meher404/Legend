@@ -273,7 +273,7 @@ public class helpFunctions {
 		ArrayList<Product> array=new ArrayList<Product>();
 		try {
 			st=con.createStatement();
-			rs=st.executeQuery("select * from product where categoryid='"+catId+"' and status=\"active\";");
+			rs=st.executeQuery("select * from product where categoryid='"+catId+"' and status='active' ;");
 			while(rs.next())
 			{
 				Product pro=new Product();
@@ -300,7 +300,7 @@ public class helpFunctions {
 		ArrayList<Product> array=new ArrayList<Product>();
 		try {
 			st=con.createStatement();
-			rs=st.executeQuery("select * from product where status=\"active\"  limit 3;");
+			rs=st.executeQuery("select * from product where status='active'  limit 3;");
 			while(rs.next())
 			{
 				Product pro=new Product();
@@ -409,7 +409,7 @@ public class helpFunctions {
 			pro.setPrice(rs1.getDouble("price"));
 			pro.setQuantity(rs1.getInt("quantity"));
 			pro.setRating(rs1.getInt("rating"));
-
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;

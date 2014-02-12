@@ -15,9 +15,18 @@ public class Search {
 	static Statement st=null;
 	Statement st1=null;
 	static PreparedStatement prep;
+	
 	public ArrayList<Product> search(String key)
 	{
-		key=key.toLowerCase();
+		int k = 0;
+		try{
+			k = Integer.parseInt(key);
+			key = k+"";
+		}
+		catch(Exception e){
+			key=key.toLowerCase();
+		}
+		
 		ArrayList<Product> array=new ArrayList<Product>();
 		db=new DBConnection();
 		con=db.getConnection();
@@ -25,16 +34,21 @@ public class Search {
 			st = con.createStatement();
 			st1=con.createStatement();
 
-//****************** Searching Products for key******************//		
+			//****************** Searching Products for key******************//		
 
-			rs=st.executeQuery("select * from product;");
+			rs=st.executeQuery("select * from product and status='active' ;");
 			while(rs.next())
 			{
 				String pname=rs.getString("name");
 				String pid=rs.getString("pid");
 				pname=pname.toLowerCase();
-				pid=pid.toLowerCase();
-				if(pname.substring(0, 3).equals(key.substring(0,3)))
+		//		pid=pid.toLowerCase();
+			//	System.out.println(pname);
+				if(pname.length()<key.length()){
+					
+				}
+				
+				else if(pname.substring(0,(key.length())).equals(key))
 				{
 					Product p=new Product();
 					p.setCategoryID(rs.getInt("categoryid"));
@@ -50,8 +64,12 @@ public class Search {
 					if(!array.contains(p))
 						array.add(p);
 				}
-				else if(pid.substring(0, 3).equals(key.substring(0,3)))
+				else if(pid.length()<key.length()){
+					
+				}
+				else if(pid.substring(0,(key.length())).equals(key))
 				{
+				//	System.out.println("pid matched");
 					Product p=new Product();
 					p.setCategoryID(rs.getInt("categoryid"));
 					p.setDescription(rs.getString("description"));
@@ -68,7 +86,7 @@ public class Search {
 				}
 			}
 
-	//*************** Searching categories for key******************//
+			//*************** Searching categories for key******************//
 
 			st=con.createStatement();
 			rs=st.executeQuery("select * from category;");
@@ -77,7 +95,10 @@ public class Search {
 				String cname=rs.getString("categoryname");
 				int cid=rs.getInt("categoryid");
 				cname=cname.toLowerCase();
-				if(cname.substring(0,2).equals(key.substring(0,2)))
+				if(cname.length()<key.length()){
+
+				}
+				else if(cname.substring(0,(key.length())).equals(key))
 				{
 					ArrayList<Product> array1=new ArrayList<Product>();
 					helpFunctions help=new helpFunctions();
@@ -91,21 +112,28 @@ public class Search {
 					}
 				}
 			}
-			
-	//**** Searching Manufacturers for key******************//
-			
+
+			//**** Searching Manufacturers for key******************//
+
 			st=con.createStatement();
 			rs=st.executeQuery("select * from manufacturer;");
 			while(rs.next())
 			{
 				String cname=rs.getString("manufacturename");
-				int cid=rs.getInt("manufactureid");
+				int mfgid=rs.getInt("manufactureid");
 				cname=cname.toLowerCase();
-				if(cname.substring(0,2).equals(key.substring(0,2)))
+				//System.out.println(cname);
+				if(cname.length()<key.length()){
+					//System.out.println("exit");
+				}
+				else if(cname.substring(0,(key.length())).equals(key))
 				{
+					//System.out.println("loop");
 					st1=con.createStatement();
-					rs1=st1.executeQuery("select * from product where manufactureid='"+cid+"';");
-					while(rs1.next()){
+					rs1=st1.executeQuery("select * from product where manufactureid='"+mfgid+"';");
+					while(rs1.next())
+					{
+						//System.out.println("product");
 						Product p=new Product();
 						p.setCategoryID(rs1.getInt("categoryid"));
 						p.setDescription(rs1.getString("description"));
@@ -117,12 +145,15 @@ public class Search {
 						p.setPrice(rs1.getDouble("price"));
 						p.setQuantity(rs1.getInt("quantity"));
 						p.setRating(rs1.getInt("rating"));
-						if(!array.contains(p))
+						if(!array.contains(p)){
 							array.add(p);
+							System.out.println("**add**");
+						}
+					
 					}
 				}
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

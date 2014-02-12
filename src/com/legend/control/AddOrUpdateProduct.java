@@ -46,6 +46,8 @@ public class AddOrUpdateProduct extends HttpServlet {
 		try {
 			/* TODO output your page here   */
 			response.setContentType("text/html;charset=UTF-8");
+			response.setHeader("Pragma", "cache");
+			response.setHeader("Cache-Control", "private, must-revalidate");
 			DiskFileItemFactory factory = new DiskFileItemFactory();
 			int maxMemSize = 40000*100;
 			// maximum size that will be stored in memory

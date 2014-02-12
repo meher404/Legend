@@ -89,6 +89,8 @@ public class RegisterServlet extends HttpServlet {
 			user.insertUser();
 			
 			response.setContentType("text/html");
+			response.setHeader("Pragma", "cache");
+			response.setHeader("Cache-Control", "private, must-revalidate");
 			//PrintWriter out = response.getWriter();
 			out.println("<html><body>");
 		    out.println("<script type=\"text/javascript\">");

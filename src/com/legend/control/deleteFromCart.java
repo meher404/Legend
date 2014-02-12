@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.legend.lib.Cart;
 import com.legend.lib.Product;
 import com.legend.lib.User;
 import com.legend.lib.deleteProduct;
@@ -26,7 +25,7 @@ public class deleteFromCart extends HttpServlet {
    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		//PrintWriter out=response.getWriter();
+		PrintWriter out=response.getWriter();
 		deleteProduct delete=new deleteProduct(); 
 		response.setContentType("text/html");
 		String pid=request.getParameter("PID");
@@ -34,16 +33,18 @@ public class deleteFromCart extends HttpServlet {
 		User u = (User)request.getSession().getAttribute("user");
 		HashMap<Product, Integer> c = u.cart;
 		Product p = helpFunctions.getProduct(pid);
-		if(c.containsKey(p))
-			c.remove(p);
 		delete.deleteFromCart(u.getUserID(), pid);
+		
+		System.out.println("product found: "+c.containsKey(p));
+		System.out.println("value removed: "+c.remove(p));
+		System.out.println("is it still there: "+c.containsKey(p));
+		u.cart = c;
+		request.getSession().setAttribute("user", u);
+		out.println("index.html");
+		
 		
 		
 	}
 
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
 
 }

@@ -30,13 +30,8 @@ public class ReportDetail extends HttpServlet {
 		ReportsAdmin reports=new ReportsAdmin();
 		String str,str1,str2,str3;
 		App app=new App();
-		/*String[] arg = new String[3];
-		try {
-			app.main(arg);
-		} catch (DocumentException e) {
-			
-			e.printStackTrace();
-		}*/
+		response.setHeader("Pragma", "cache");
+		response.setHeader("Cache-Control", "private, must-revalidate");
 		String fileSavePath = request.getServletContext().getRealPath("")+File.separator;;
 		if(request.getParameter("cat").equals("product")){
 			str=reports.ReportsByProduct();
