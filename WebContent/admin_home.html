@@ -122,15 +122,7 @@
     </div>  
     
 	<hr>
-    
-	<!--******************** Edit New Products Section ********************-->
-    <section id="portfolio" class="single-page scrollblock">
-      <div class="container">
-       
-        <h1 id="folio-headline">Edit New Products</h1>
-        <div class="row">
-          <div class="span4">
-            <div id="regDiv" style="display : none;">
+    <div id="regDiv" style="display : none;">
 				<div id="regBg" style=" opacity:0.68; height:643px; display:block" onclick="hide()"></div>
 				<!-- <div id="main" style="position: absolute;top:30px;left: 275px;"> -->
 				<div id="main" style="position: absolute;top:30px;left:275px;>
@@ -193,64 +185,26 @@
 					
 				</div>
 			</div>
-			<div class="mask2" onclick="unHide('t1')"> <!--<a href="img/products/samsung-s4.jpg" rel="prettyPhoto">--><img src="img/products/samsung-s4.jpg" alt=""></a> </div>
-            <div class="inside" id="t1" name="t1">
-              <hgroup>
-                <h4>Samsung Galaxy S4</h4>
-              </hgroup>
-              <div class="entry-content" >
-                <table class="table">
-				<tr><td>Name: </td><td>S4</td></tr>
-				<tr><td>Price: </td><td>Rs. 50000</td></tr>
-				<tr><td>Category: </td><td>Mobile Phone</td></tr>
-				</table>
-                <a class="more-link" onclick="unHide('t1')" >ADD TO CART</a> </div>
-            </div>
+	</div>
+	<!--******************** Edit New Products Section ********************-->
+	<script>
+	$(document).ready(function() {                        
+        $.get('EditNewProducts',function(responseText) { 
+        	document.getElementById('folio-headline').innerHTML="Edit New Products";
+        	document.getElementById('editnewproducts').innerHTML=responseText;         
+        });
+	});
+	</script>
+    <section id="portfolio" class="single-page scrollblock">
+      <div class="container">
+       
+        <h1 id="folio-headline">Edit New Products</h1>
+        <div class="row" id="editnewproducts">
           
-		  <!-- /.inside -->          
-		  </div>
-          
-		  <!-- /.span4 -->
-          <div class="span4">
-           
-		   <div class="mask2" onclick="unHide('t2')"> <!--<a href="img/products/samsung-s4.jpg" rel="prettyPhoto">--><img src="img/products/samsung-s4.jpg" alt=""></a> </div>
-            <div class="inside" id="t2" name="t2">
-              <hgroup>
-                <h4>Samsung Galaxy S5</h4>
-              </hgroup>
-              <div class="entry-content" >
-                <table class="table">
-				<tr><td>Name: </td><td>S5</td></tr>
-				<tr><td>Price: </td><td>Rs. 50000</td></tr>
-				<tr><td>Category: </td><td>Mobile Phone</td></tr>
-				</table>
-                <a class="more-link" onclick="unHide('t2')">ADD TO CART</a> </div>
-            </div>
-		</div>
-          <!-- /.span4 -->
-          <div class="span4">
-		  
-            <div class="mask2" onclick="unHide('t3')"> <!--<a href="img/products/samsung-s4.jpg" rel="prettyPhoto">--><img src="img/products/samsung-s4.jpg" alt=""></a> </div>
-            <div class="inside"  id="t3" name="t3">
-              <hgroup>
-                <h4>Samsung Galaxy S6</h4>
-              </hgroup>
-              <div class="entry-content">
-                <table class="table">
-				<tr><td>Name: </td><td>S6</td></tr>
-				<tr><td>Price: </td><td>Rs. 50000</td></tr>
-				<tr><td>Category: </td><td>Mobile Phone</td></tr>
-				</table>
-                <a class="more-link" onclick="unHide('t3')">ADD TO CART</a> </div>
-            </div>
-            
-			<!-- /.inside -->
-          </div>
-          <!-- /.span4 -->
         </div>
-        <!-- /.row -->
+    
       </div>
-      <!-- /.container -->
+     
     </section>
     
 	<hr>

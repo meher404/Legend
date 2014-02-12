@@ -15,7 +15,7 @@ public class DBConnection {
 			Properties pro=new Properties();			
 			FileInputStream fi = null;
 			try {
-				fi = new FileInputStream("C:\\Users\\Singam1\\git\\Legend\\jdbc.properties");
+				fi = new FileInputStream("C:\\Users\\Meher\\git\\Legend\\jdbc.properties");
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
