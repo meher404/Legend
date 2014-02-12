@@ -33,6 +33,7 @@ public class Login extends HttpServlet {
 			rd.include(request, response);
 			return;
 		}
+		
 			
 		
 		helpFunctions help=new helpFunctions();
@@ -58,6 +59,9 @@ public class Login extends HttpServlet {
 			System.out.println("failed");
 			HttpSession ss1=request.getSession(false);
 			ss1.invalidate();
+			RequestDispatcher rd=request.getRequestDispatcher("index.html");
+			rd.include(request, response);
+			out.println("<script>Invalid Login Please Try Again</script>");
 		}
 		
 		

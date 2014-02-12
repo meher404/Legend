@@ -167,67 +167,69 @@ public class helpFunctions {
 			int categoryId=c.generateCategoryID(catName);
 			int manufacturerId=m.generatemanufactureID(manName);
 			Product p=new Product();
-			String PID=p.GeneratePID(categoryId, manufacturerId);
+			boolean existing=true;
+			String PID;
+			PID=existingPID(name);
+			if(PID.equals("")){
+				PID=p.GeneratePID(categoryId, manufacturerId);
+				existing=false;
+			}
 			double price1 = 0,discount1 = 0;
 			int quantity1 = 0;
 			st=con.createStatement();
 			boolean flag=false;
+			if(existing){
+				rs=st.executeQuery("select * from product where pid='"+PID+"';");
 
-			rs=st.executeQuery("select * from product");
+				if(rs.next())
+				{
+					String proId=rs.getString("pid");
+					String pname=rs.getString("name");
+					String pimg=rs.getString("image");
+					double pprice=rs.getDouble("price");
+					int pquantity=rs.getInt("quantity");
+					String pdescription=rs.getString("description");
+					double pdiscount=rs.getDouble("discount");
+					int manfId=rs.getInt("manufactureid");
+					int catId=rs.getInt("categoryid");
+					int rating=rs.getInt("rating");
+					//	System.out.println("From main : "+PID+"\nFrom database: "+proId);
 
-			while(rs.next())
-			{
-				String proId=rs.getString("pid");
-				String pname=rs.getString("name");
-				String pimg=rs.getString("image");
-				double pprice=rs.getDouble("price");
-				int pquantity=rs.getInt("quantity");
-				String pdescription=rs.getString("description");
-				double pdiscount=rs.getDouble("discount");
-				int manfId=rs.getInt("manufactureid");
-				int catId=rs.getInt("categoryid");
-				int rating=rs.getInt("rating");
-				//	System.out.println("From main : "+PID+"\nFrom database: "+proId);
+					if(name.equals("")){
+						name=pname;
+					}
+					if(description.equals("")){
+						description=pdescription;
+					}
+					if(imagepath.equals("")){
+						imagepath=pimg;
+					}
+					if(price.equals(""))
+					{
+						price1=pprice;
+					}
+					else
+					{
+						price1=Double.parseDouble(price);
+					}
+					if(quantity.equals(""))
+					{
+						quantity1=pquantity;
+					}
+					else
+					{
+						quantity1=Integer.parseInt(quantity);
+					}
+					if(discount.equals(""))
+					{
+						discount1=pdiscount;
+					}
+					else
+					{
+						discount1=Double.parseDouble(discount);
+						//System.out.println("discount1: "+discount1);
+					}
 
-
-			
-				//	System.out.println("Product exists");
-				if(name.equals("")){
-					name=pname;
-				}
-				if(description.equals("")){
-					description=pdescription;
-				}
-				if(imagepath.equals("")){
-					imagepath=pimg;
-
-				}
-				if(price.equals(""))
-				{
-					price1=pprice;
-				}
-				else
-				{
-					price1=Double.parseDouble(price);
-				}
-				if(quantity.equals(""))
-				{
-					quantity1=pquantity;
-				}
-				else
-				{
-					quantity1=Integer.parseInt(quantity);
-				}
-				if(discount.equals(""))
-				{
-					discount1=pdiscount;
-				}
-				else
-				{
-					discount1=Double.parseDouble(discount);
-					//System.out.println("discount1: "+discount1);
-				}
-				if(proId.equals(PID)){
 					flag=true;
 					String sql        = "UPDATE product SET name = ?,image=?,price=?,quantity=?,description=?,discount=? "
 							+ " WHERE pid = ?";
@@ -242,7 +244,11 @@ public class helpFunctions {
 					pst.executeUpdate();
 				}
 			}
-			if(flag==false){
+			else if(!existing)
+			{
+				price1=Double.parseDouble(price);
+				discount1=Double.parseDouble(discount);
+				quantity1=Integer.parseInt(quantity);
 				prep=con.prepareStatement("insert into product values(?,?,?,?,?,?,?,?,?,?,?);");
 				prep.setString(1,name);
 				prep.setString(2, PID);
@@ -257,6 +263,7 @@ public class helpFunctions {
 				prep.setString(11,"active");
 				prep.executeUpdate();
 			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -334,10 +341,10 @@ public class helpFunctions {
 		return false;
 	}
 
-	public String existingPID(String pname){
+	public static String existingPID(String pname){
 		String pid="";
 		try {
-			
+
 			st=con.createStatement();
 			rs=st.executeQuery("select pid from product where name='"+pname+"';");
 			if(rs.next()){
@@ -381,7 +388,7 @@ public class helpFunctions {
 		}
 		return name;
 	}
-	
+
 	public static Product getProduct(String pid){
 		Product pro=new Product();
 		try {
@@ -391,7 +398,7 @@ public class helpFunctions {
 			//st=con.createStatement();
 			rs1=st.executeQuery("select * from product where pid='"+pid+"';");
 			rs1.next();
-			
+
 			pro.setPname(rs1.getString("name"));
 			pro.setCategoryID(rs1.getInt("categoryid"));
 			pro.setDescription(rs1.getString("description"));
@@ -402,7 +409,7 @@ public class helpFunctions {
 			pro.setPrice(rs1.getDouble("price"));
 			pro.setQuantity(rs1.getInt("quantity"));
 			pro.setRating(rs1.getInt("rating"));
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;

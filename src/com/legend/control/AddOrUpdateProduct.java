@@ -57,9 +57,24 @@ public class AddOrUpdateProduct extends HttpServlet {
 			long maxFileSize = 4000*100;
 			// maximum file size to be uploaded.
 			upload.setSizeMax(maxFileSize );
-			//Specify the path of the file here fileSavePath
-
-			// Parse the request to get file items.
+		
+			boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+			System.out.println("isMultipart: "+isMultipart);
+			
+			if(!isMultipart){
+				pname = request.getParameter("pname");
+				category = request.getParameter("category");
+				mfgname=request.getParameter("mfgname");
+				description=request.getParameter("desc");
+				cost=request.getParameter("price");
+				qty=request.getParameter("qty");
+				disc=request.getParameter("disc");
+				helpFunctions.crudProduct(pname,"",cost,description,qty, disc, category, mfgname);
+				RequestDispatcher rd=request.getRequestDispatcher("admin_home.html");
+				rd.include(request, response);
+				out.println("<script>alert('Updated "+pname+" Product');</script>");
+				return;
+			}
 			List<?> fileItems = upload.parseRequest(request);
 			// Process the uploaded file items
 			Iterator<?> i = fileItems.iterator();
@@ -67,7 +82,8 @@ public class AddOrUpdateProduct extends HttpServlet {
 
 
 
-
+		
+			
 
 			while (i.hasNext()) {
 				FileItem fi = (FileItem) i.next();
@@ -114,7 +130,7 @@ public class AddOrUpdateProduct extends HttpServlet {
 					System.out.println("fileSavePath: "+fileSavePath);
 					request.setAttribute("filePath", fileSavePath);
 				}
-				else  {
+				else {
 					// Get the uploaded file parameters
 					fileName = fi.getName();
 					System.out.println("File Name is : " + fileName);
@@ -145,7 +161,7 @@ public class AddOrUpdateProduct extends HttpServlet {
 		helpFunctions.crudProduct(pname,path,cost,description,qty, disc, category, mfgname);
 		RequestDispatcher rd=request.getRequestDispatcher("admin_home.html");
 		rd.include(request, response);
-		out.println("<script>alert('Added "+pname+" Product');</script>");
+		out.println("<script>alert(' "+pname+" Product Saved');</script>");
 	}
 
 }

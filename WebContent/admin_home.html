@@ -47,11 +47,32 @@
           });
 		function unHide(val){
 			document.getElementById("regDiv").style.display = "";
-		}
+			document.getElementById('category').value="";
+			document.getElementById('pname').value="";
+			document.getElementById('mfgname').value="";
+			document.getElementById('pid').value="";
+			document.getElementById('desc').value="";
+			document.getElementById('price').value="";
+			document.getElementById('qty').value="";
+			document.getElementById('disc').value="";
+			document.getElementById('submit').value='Add Product';
+			document.getElementById('form_update_product').enctype="multipart/form-data";
+			window.location='#regDiv';
+		};
 
 		function hide(){
 			document.getElementById("regDiv").style.display = "none";
-        }
+        };
+		
+		function getpid(){
+			var cat= document.getElementById('category').value;
+			var pname = document.getElementById('pname').value;
+			var mfname= document.getElementById('mfgname').value;
+			var url = 'DisplayPid?pname='+pname+'&mfgname='+mfname+'&category='+cat;
+			$.get(url,function(obj1){
+				document.getElementById('pid').value=obj1;
+			});
+		};
 	 </script>
     </head>
     
@@ -123,12 +144,9 @@
 				<!-- <div id="main" style="position: absolute;top:30px;left: 275px;"> -->
 				<div id="main" style="position: absolute;top:30px;left:275px;>
 					
-						<center>
-						<h3> <b id="title_add_OR_update">Add Product Form</b></h3>
-						</center>
-						<fieldset name="add_OR_update_ProductForm" style="margin:auto; width:600px;  ">
+				<fieldset name="add_OR_update_ProductForm" style="margin:auto; width:600px;  ">
             <div id="show2" height="200"> </div>
-            <form name="form_update_product" id="form_update_product" enctype="multipart/form-data" action="AddOrUpdateProduct" method="POST">
+            <form name="form_update_product" id="form_update_product" action="AddOrUpdateProduct" method="POST">
             <table align="center" cellpadding="7" width="70%">
               <tbody>
                 <tr>
@@ -141,15 +159,15 @@
                 </tr>
                 <tr>
                   <td>Manufacturer Name:<font color="red"> *</font></td>
-                  <td><input name="mfgname" id="mfgname" size="30" placeholder="Manufacturer name" required=""> <span style="color: red;" id="error000"> </span></td>
+                  <td><input name="mfgname" id="mfgname" size="30" onchange="getpid()" placeholder="Manufacturer name" required=""> <span style="color: red;" id="error000"> </span></td>
                 </tr>
 				 <tr>
                   <td>ProductID:<font color="red"> *</font></td>
                   <td><input name="pid" id="pid"  placeholder="PID"  type="text" required="" disabled><span style="color: black;" id="error00"> </span></td>
                 </tr>
 				<tr>
-                  <td>Image:<font color="red"> *</font></td>
-                  <td><input name="img" id="img" type="file" accept="image/*" required="" > <span style="color: red;" id="error000"> </span></td>
+                  <td>Image:</td>
+                  <td><input name="img" id="img" type="file" accept="image/*"  > <span style="color: red;" id="error000"> </span></td>
                 </tr>
                 <tr>
                   <td>Description:<font color="red"> *</font></td>
@@ -190,6 +208,27 @@
         	document.getElementById('editnewproducts').innerHTML=responseText;         
         });
 	});
+	</script>
+	<script>
+	function retrieveDetails(pid){
+		console.log("pid: "+pid);
+		var url ='RetrieveProductDetails?PID='+pid; 
+		$.get(url,function(obj) { 
+        	console.log(obj); 
+			console.log(obj.category);
+			document.getElementById('category').value=obj.category;
+			document.getElementById('pname').value=obj.pname;
+			document.getElementById('mfgname').value=obj.mfgname;
+			document.getElementById('pid').value=obj.pid;
+			document.getElementById('desc').value=obj.desc;
+			document.getElementById('price').value=obj.price;
+			document.getElementById('qty').value=obj.qty;
+			document.getElementById('disc').value=obj.disc;
+			document.getElementById('submit').value='Update Product';
+			document.getElementById("regDiv").style.display="";
+			window.location='#regDiv';
+        });
+	};
 	</script>
     <section id="portfolio" class="single-page scrollblock">
       <div class="container">
