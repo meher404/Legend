@@ -91,10 +91,10 @@ public class AddOrUpdateProduct extends HttpServlet {
 						qty=fi.getString();
 					if(fi.getFieldName().equals("disc"))
 						disc=fi.getString();
-
+					category = category.toLowerCase();
 					fileSavePath = request.getServletContext().getRealPath("");
-					fileSavePath =fileSavePath+"/img/products/"+category+File.separator; //+  File.separator;
-					path="/img/products/"+category+File.separator+fileName;
+					fileSavePath =fileSavePath+"/img/products/"+category+"/"; //+  File.separator;
+					path="img/products/"+category+"/"+fileName;
 					System.out.println(path);
 					//String realPath="/images/";
 					// String fileSavePath=getServletContext().getRealPath(realPath);
