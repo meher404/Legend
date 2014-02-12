@@ -23,7 +23,7 @@ public class Shipping {
 	private String recipient;
 	private String userid;
 	private int addressid;
-	private long contactNo;
+	private String contactNo;
 	public String getSaleid() {
 		return saleid;
 	}
@@ -48,10 +48,10 @@ public class Shipping {
 	public void setAddressid(int addressid) {
 		this.addressid = addressid;
 	}
-	public long getContactNo() {
+	public String getContactNo() {
 		return contactNo;
 	}
-	public void setContactNo(long contactNo) {
+	public void setContactNo(String contactNo) {
 		this.contactNo = contactNo;
 	}
 
@@ -62,7 +62,8 @@ public class Shipping {
 			st = con.createStatement();
 			PreparedStatement prep=con.prepareStatement("insert into shipping (recipient,contactNo,addressid,userid) values(?,?,?,?);");
 			prep.setString(1,getRecipient());
-			prep.setLong(2,getContactNo());
+			System.out.println("Phone number: "+getContactNo());
+			prep.setString(2,getContactNo());
 			prep.setInt(3,getAddressid());
 			prep.setString(4,getUserid());
 			prep.executeUpdate();

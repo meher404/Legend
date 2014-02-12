@@ -32,7 +32,8 @@ public class helpFunctions {
 			e.printStackTrace();
 		}
 	}
-
+	
+	
 
 	public User getFilledUser(String email){
 		HashMap<Product, Integer> cart=new HashMap<Product, Integer>();
@@ -154,10 +155,11 @@ public class helpFunctions {
 
 	public static String generateSaleid(){
 		String temp="sale00";
-		int tem=temp.length()%10;
+		int tem=1+(int)(Math.random() *500);
 		temp=temp+tem+"";
 		return temp;
 	}
+	
 	public static void crudProduct(String name,String imagepath,String price,String description,String quantity,String discount,String catName,String manName)
 	{  
 		try {

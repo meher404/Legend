@@ -75,7 +75,7 @@
                 
                 <!-- <li><a title="team" href="#team">Register/Login</a></li> -->
                 <li><a title="contact" href="#contact">Shipping Details</a></li> 
-				<li><a title="news" href="#news">Order Summary</a></li>
+				<li id="ordersummary" style="display:none"><a title="news" href="#news">Order Summary</a></li>
               </ul>
             </nav>
           </div>
@@ -95,11 +95,11 @@
         <h1><span>Legend!</span> The new way to Shop.</h1>
         <div class="container">
           <div class="row">
-            <div class="span12">
+            <!--  <div class="span12">
               <h2>Search for any product you want</h2>
               <input type="text" name="search-product" placeholder="Head First Java" class="cform-text" size="40" title="Product search">
               <input type="submit" value="Search" class="cform-submit">
-            </div>
+            </div>-->
           </div>
           <div class="row">
             <div class="span12">
@@ -148,19 +148,19 @@
             <div class="cform" id="theme-form">
               
              
-				<form id="shipping-form" action="#" method="post" class="cform-form">
+				<form id="shipping-form" action="ShippingServlet" method="post" class="cform-form">
 				
 				
 				<div><div class="row"><div class="span4"></div><div class="span4" align="center"> Use Default Address for Shipping <input type="checkbox" name="default" id="default" onclick="callServletToLoadDefaultAddress()" /></div></div></div>
 				<br/>
 				<div class="row">               
 				<div class="span4"> <span class="your-name">
-                    <input type="text" name="your-name" placeholder="Recipient's Name" class="cform-text" size="40" 
+                    <input type="text" id="your-name" name="your-name" placeholder="Recipient's Name" class="cform-text" size="40" 
 					title="your name"  data-validation="custom" data-validation-regexp="^([a-z]+)$" data-validation-error-msg="Only Alphabets allowed" >
                     </span> </div>
 					<div class="span4"></div>
                   <div class="span4"> <span class="your-name">
-                    <input type="text" name="your-phone" placeholder="Contact Number" class="cform-text" size="40" 
+                    <input type="text" id="your-phone" name="your-phone" placeholder="Contact Number" class="cform-text" size="40" 
 					title="your phone number" data-validation="number" data-validation-allowing="range[1000000000;9999999999]" data-validation-error-msg="Phone number has 10 digits" >
                     </span> </div>
 					
@@ -168,23 +168,23 @@
 				<strong>Shipping Address Details:</strong> 
 				<div class="row">
 				  <div class="span3"> <span class="your-door-num">
-                    <input type="text" name="your-door-num" placeholder="Door Number" class="cform-text" size="40" 
+                    <input type="text" id="your-door-num" name="your-door-num" placeholder="Door Number" class="cform-text" size="40" 
 					title="Door Number" data-validation="alphanumeric" data-validation-allowing="-_/" data-validation-error-msg="Alphanumeric with -, _,/ are allowed" >
                     </span> </div>
                   <div class="span3"> <span class="your-street">
-                    <input type="text" name="your-street" placeholder="Street Name" class="cform-text" size="40" title="your street" >
+                    <input type="text" id="your-street" name="your-street" placeholder="Street Name" class="cform-text" size="40" title="your street" >
                     </span> </div>
 				  <div class="span3"> <span class="your-city">
-                    <input type="text" placeholder="City Name" name="your-city" size="40"  class="cform-text">
+                    <input type="text" placeholder="City Name" id="your-city" name="your-city" size="40"  class="cform-text">
                     </span> </div>
 				  <div class="span3"> <span class="your-State">
-                    <input type="text" placeholder="State Name" name="your-state" size="40"  class="cform-text">
+                    <input type="text" placeholder="State Name" id="your-state" name="your-state" size="40"  class="cform-text">
                     </span> </div>
                 </div>
 				<div class="row">
                   <div class="span4" style="visibility:hidden"></div>
 					<div class="span4"> <span class="your-pin">
-                    <input type="text" name="your-pin-code" placeholder="Pin/Zip Code" class="cform-text" size="40" 
+                    <input type="text" id="your-pin-code" name="your-pin-code" placeholder="Pin/Zip Code" class="cform-text" size="40" 
 					title="pincode" data-validation="number" data-validation-error-msg="Pin/zip code should have only numbers">
                     </span> </div>
                 </div>
@@ -288,8 +288,29 @@
 	//var check_sign = true;
 		function callServletToLoadDefaultAddress(){
 			var checked = document.getElementById('default').checked;
-			if(checked==true)
-				alert('check check check');
+			if(checked==true)//fill details
+			{
+				var url = 'GetDefaultAddress';
+				$.get(url,function(resp){
+					console.log(resp);
+					document.getElementById('your-name').value=resp.name;
+					document.getElementById('your-phone').value=resp.number;
+					document.getElementById('your-door-num').value=resp.dno;
+					document.getElementById('your-street').value=resp.street;
+					document.getElementById('your-city').value=resp.city;
+					document.getElementById('your-state').value=resp.state;
+					document.getElementById('your-pin-code').value=resp.pin;
+				});
+			}
+			else{
+				document.getElementById('your-name').value="";
+				document.getElementById('your-phone').value="";
+				document.getElementById('your-door-num').value="";
+				document.getElementById('your-street').value="";
+				document.getElementById('your-city').value="";
+				document.getElementById('your-state').value="";
+				document.getElementById('your-pin-code').value="";	
+			}
 		}
 		
 	</script>

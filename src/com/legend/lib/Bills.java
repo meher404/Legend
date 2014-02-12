@@ -71,13 +71,14 @@ public class Bills {
 		}
 		double total=0;
 		try {
-			rs=st.executeQuery("select pid from orderdetails where saleid='"+saleid+"';");
+			rs=st.executeQuery("select pid,quantity from orderdetails where saleid='"+saleid+"';");
 			while(rs.next()){
 				String pid=rs.getString("pid");
+				int quantity=rs.getInt("quantity");
 				rs1=stmt.executeQuery("select price from product where pid='"+pid+"';");
 				if(rs1.next()){
 					double amt=rs1.getDouble("price");
-					total=total+amt;
+					total=total+(amt*quantity);
 				}
 			}
 		} catch (SQLException e) {
@@ -85,7 +86,6 @@ public class Bills {
 		}
 		return total;
 	}
-	
 	
 	void insertBills(OrderDetails Od){
 		try {

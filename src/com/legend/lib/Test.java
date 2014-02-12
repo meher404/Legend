@@ -9,9 +9,12 @@ public class Test  {
 	}
 	void ProductTest() throws Exception{
 	
-			deleteProduct delete=new deleteProduct();
-			delete.deleteProductAdmin("nik");
-			delete.deleteFromCart("binn9","book002");
+		helpFunctions help=new helpFunctions();
+		User user=new User();
+		user=help.getFilledUser("binni@gmail.com");
+		OrderDetails od=new OrderDetails();
+		String str=od.OrderSummary(user,"sale002");
+		System.out.println(str);
 			//help.crudProduct("Nikhitha","legend/images/bag.jpg","500","Bag","54","20.2","Nikhitha","Nikhitha");
 	}
 }

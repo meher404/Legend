@@ -23,7 +23,7 @@ public class ShippingServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		PrintWriter out=response.getWriter();
 		Address add=new Address();
@@ -36,7 +36,7 @@ public class ShippingServlet extends HttpServlet {
 		String uid=user.getUserID();
 		String recipientName=request.getParameter("your-name");
 		String contactNumber=request.getParameter("your-phone");
-		long contact=Long.parseLong(contactNumber);
+		//long contact=Long.parseLong(contactNumber);
 		String doorno=request.getParameter("your-door-num");
 		String street=request.getParameter("your-street");
 		String city=request.getParameter("your-city");
@@ -46,18 +46,30 @@ public class ShippingServlet extends HttpServlet {
 		addId=help.checkAddressId(doorno, street, city);
 		if(addId==0){
 			addId=add.generateAddressId(pin);
+			//insert in address table
+			add.setAddressID(addId);
+			add.setDoorNo(doorno);
+			add.setStreet(street);
+			add.setCity(city);
+			add.setState(state);
+			add.setPincode(pin);
+			add.insertAddress();
 		}
+		
+		//insert into shipping table
 		ship.setAddressid(addId);
-		ship.setContactNo(contact);
+		ship.setContactNo(contactNumber);
 		ship.setRecipient(recipientName);
 		ship.setUserid(uid);
 		ship.insertSaleid();
+		double total=help.calculateAmount(user);
+		System.out.println(total);
+		//total should be calculated and should be sent to bank here.
+		response.sendRedirect("http://localhost:8080/SimpleBank/ConfirmPayment.html?vendor=Legend&amt="+total);
+		
 	}
 
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-	{
-
-	}
+	
 
 }
