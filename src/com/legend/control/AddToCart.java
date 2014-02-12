@@ -46,15 +46,21 @@ public class AddToCart extends HttpServlet {
 		
 		//PrintWriter out = response.getWriter();
 		HashMap<Product, Integer> map = u.cart;
-		
 		Product p = helpFunctions.getProduct(pid);
+		
+		Cart c = new Cart();
+		c.setUid(u.getUserID());
+		if(!c.crudCart(p, qty)){//inserted product into cart.  
+			out.println("<script>alert('Stock not available')</script>");
+			RequestDispatcher rd = request.getRequestDispatcher("index.html");
+			rd.include(request, response);
+			return;
+		}
+		
 		map.put(p,qty);
 		u.cart = map;
 		session.setAttribute("user", u);
 		
-		Cart c = new Cart();
-		c.setUid(u.getUserID());
-		c.crudCart(p, qty); //inserted product into cart.  
 		
 		RequestDispatcher rd = request.getRequestDispatcher("index.html");
 		rd.include(request, response);
