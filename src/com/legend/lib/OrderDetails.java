@@ -19,10 +19,12 @@ public class OrderDetails {
 
 	static Connection conn = null;
 	static Statement stmt = null;
+	static Statement st1=null;
 	static ResultSet rs=null;
 	ResultSet rs1=null;
 	ResultSet rs2=null;
 	ResultSet rs3=null;
+	ResultSet rs4=null;
 	static PreparedStatement prep,prep1;
 
 	private String saleid;
@@ -73,6 +75,7 @@ public class OrderDetails {
 			st = con.createStatement();
 			deleteProduct delete=new deleteProduct();
 
+			MoreHelpFunctions m_help=new MoreHelpFunctions();
 			HashMap<Product, Integer> cart=new HashMap<Product, Integer>();
 
 			Bills bill=new Bills();
@@ -102,6 +105,7 @@ public class OrderDetails {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date date = new Date();
 			String str_date=dateFormat.format(date);
+			
 			double totalAmount=bill.calculateTotal(saleid);
 			String deliveryStatus="pending";
 			prep1=con.prepareStatement("insert into bills values(?,?,?,?,?);");
@@ -115,6 +119,7 @@ public class OrderDetails {
 			delete.deleteFromCart(uid, saleid);  //deleting from cart after successfull transaction
 
 			str=OrderSummary(user,saleid);
+			m_help.SuccessfulTransaction(saleid, uid);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -122,20 +127,31 @@ public class OrderDetails {
 		return str;
 	}
 
+	
+	
 
 	public String OrderSummary(User user,String saleid){
-		String str="";
+		String str="",mail="";
 		try {
 			db=new DBConnection();
 			con=db.getConnection();
 			st = con.createStatement();
 			stmt=con.createStatement();
-			
+			st1=con.createStatement();
 			String uid=user.getUserID();
 			String str_date="",doorno="",street="",city="",state="",pid="",pname="";
 			int pincode=0,addId=0,quantity=0;
 			double total=0,price=0;
 			String uname=user.getName();
+			String name="";
+			rs4=st1.executeQuery("select recipient from shipping where userid='"+uid+"' and current='active';");
+			if(rs4.next()){
+				
+				name=rs4.getString("recipient");
+				System.out.println("recipient"+name);
+			}
+			
+			
 			rs1=st.executeQuery("select * from bills where saleid='"+saleid+"';");
 			while(rs1.next()){
 				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -155,9 +171,12 @@ public class OrderDetails {
 			}
 			String address=uname+","+doorno+","+street+","+city+","+state+","+pincode+"";
 			
+			mail="Your last Transaction was successfull"+"\n"+"\n";
+			mail=mail+"  Sale id :   "+saleid+"\n"+"  Customer Name: "+name+"\n";
+			mail=mail+"\n"+"  Shipping Address"+" :  "+address+"\n"+"\n";
 
-			str="<table>"+"<tr>"+"<td>"+"Sale ID:"+saleid+"</td>"+"<td>"+"Customer:"+uname+"</td>"+"<td>"+"Purchase Time:"+str_date+"</td>"+"</tr>"
-					+"<tr>"+"<td>"+"Deliver to:"+address+"</td>"+"<td>"+"Customer:"+uname+"</td>"+"<td>"+""+"</td>"+"</tr>"
+			str="<table>"+"<tr>"+"<td>"+"Sale ID:"+saleid+"</td>"+"<td>"+"Customer:"+name+"</td>"+"<td>"+"Purchase Time:"+str_date+"</td>"+"</tr>"
+					+"<tr>"+"<td>"+"Deliver to:"+"</td>"+"<td>"+address+"</td>"+"<td>"+""+"</td>"+"</tr>"
 					+"<tr>"+"<td>"+"Product Name"+"</td>"+"<td>"+"Quantity"+"</td>"+"<td>"+"Price(Including shipping and Tax"+"</td>"+"</tr>";
 
 			st = con.createStatement();
@@ -171,14 +190,14 @@ public class OrderDetails {
 					pname=rs3.getString("name");
 				}
 				str=str+"<tr>"+"<td>"+pname+"</td>"+"<td>"+quantity+"</td>"+"<td>"+price+"</td>"+"</tr>";
-
+				mail=mail+"  Product : "+pname+"\t"+"quantity : "+quantity+"\t"+"Price : "+price+"\n";
 			}
 			str=str+"</table>";
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		return str;
+		String finalStr=str+"$"+mail;
+		return finalStr;
 	}
 
 

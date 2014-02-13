@@ -15,7 +15,7 @@ public class MoreHelpFunctions {
 	Statement st=null;
 	Statement st1=null;
 	static PreparedStatement prep;
-	
+
 	public int checkAddressId(String doorno,String street,String city)
 	{
 		int addId=0;
@@ -31,10 +31,10 @@ public class MoreHelpFunctions {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return addId;
 	}
-	
+
 	public void updateShipping(Bills b)
 	{
 		try {
@@ -44,12 +44,12 @@ public class MoreHelpFunctions {
 			String saleid=b.getSaleid();
 			String sql="update shipping set saleid='"+saleid+"';";
 			st.executeUpdate(sql);
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public double calculateAmount(User user){
 		double amount=0;
 		try {
@@ -57,9 +57,9 @@ public class MoreHelpFunctions {
 			con=db.getConnection();
 			st = con.createStatement();
 			HashMap<Product, Integer> cart=new HashMap<Product, Integer>();
-		
+
 			cart=user.getCart();
-			
+
 			for ( Product p : cart.keySet() ) {
 				int quantity=cart.get(p);
 				String pid=p.getPID();
@@ -69,14 +69,54 @@ public class MoreHelpFunctions {
 					amount=amount+(price*quantity);
 				}
 			}
-				
+
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return amount;
+	}
+
+	public int bank_Response(String uid){
+		int str=0;
+		try {
+			db=new DBConnection();
+			con=db.getConnection();
+			st = con.createStatement();
+			rs=st.executeQuery("select addressid from shipping where userid='"+uid+"' and current='active';");
+			if(rs.next()){
+				str=rs.getInt("addressid");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return str;
+	}
+
+	public void UnsuccessfulTransaction(String uid){
+		try{
+
+			db=new DBConnection();
+			con=db.getConnection();
+			st = con.createStatement(); 
+			st.executeUpdate("update shipping set current='completed' where userid='"+uid+"' and current='active';");
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		return amount;
 	}
-	
+	public void SuccessfulTransaction(String saleid,String uid){
+		try{
+
+			db=new DBConnection();
+			con=db.getConnection();
+			st = con.createStatement(); 
+			st.executeUpdate("update shipping set current='completed',saleid='"+saleid+"' where userid='"+uid+"' and current='active';");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 }
