@@ -65,7 +65,7 @@ public class ShippingServlet extends HttpServlet {
 		double total=help.calculateAmount(user);
 		System.out.println(total);
 		//total should be calculated and should be sent to bank here.
-		response.sendRedirect("http://localhost:8080/SimpleBank/ConfirmPayment.html?vendor=Legend&amt="+total);
+		response.sendRedirect("http://localhost:8080/SimpleBanking/ConfirmPayment?vendor=Legend&amt="+total);
 		
 	}
 

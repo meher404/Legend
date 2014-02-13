@@ -57,25 +57,23 @@ public class helpFunctions {
 
 		return user;
 	}
+	
+	
 
 	public static boolean Login(String email,String pwd){
 		String encryptedPwd,status = "";
 		CaesarCipher cd=new CaesarCipher();
 		encryptedPwd=cd.encrypt(pwd,2);
 		try {
-			rs=st.executeQuery("select email,password,userid from user;");
-			while(rs.next()){
-				String mail=rs.getString("email");
+			rs=st.executeQuery("select password from user where email='"+email+"';");
+			if(rs==null)return false;
+			
+				rs.next();
 				String passwrd=rs.getString("password");
-				String uid=rs.getString("userid");
-				rs1=stmt.executeQuery("select status from registration where userid='"+uid+"';");
-				if(rs1.next()){
-					status=rs1.getString("status");
-				}
-				if(mail.equals(email) && encryptedPwd.equals(passwrd)&& status.equals("active")){
-					return true;
-				}
-			}
+				if(passwrd==null||passwrd.isEmpty()) return false;
+				
+				if(passwrd.equals(encryptedPwd))return true;
+				
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -173,7 +171,8 @@ public class helpFunctions {
 			String PID;
 			PID=existingPID(name);
 			if(PID.equals("")){
-				PID=p.GeneratePID(categoryId, manufacturerId);
+				//PID=p.GeneratePID(categoryId, manufacturerId);
+				PID = (name.hashCode()+"")+(categoryId+"")+(manufacturerId+"");
 				existing=false;
 			}
 			double price1 = 0,discount1 = 0;

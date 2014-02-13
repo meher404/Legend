@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
+import java.util.Vector;
 
 public class ReportsAdmin
 {
@@ -120,6 +121,7 @@ public class ReportsAdmin
 
 	public String YearlyReports()
 	{
+		Vector<Integer> vect=new Vector<Integer>();
 		String str;
 		str="Year;Items Sold;Revenue?";
 	//	str=str+"-------------------------------------"+"\n";
@@ -145,6 +147,11 @@ public class ReportsAdmin
 				cal1.setTime(date1);
 				year = cal1.get(Calendar.YEAR);
 				//		str=str+"----------YEAR :"+year+"-----------"+"\n";
+				if(vect.contains(year)){
+					continue;
+				}
+				vect.add(year);
+				
 				revenue=0;
 				sales=0;
 				totalAmount=0;
@@ -188,6 +195,8 @@ public class ReportsAdmin
 
 	public String MonthlyReports()
 	{
+		Vector<Integer> vect=new Vector<Integer>();
+		
 		String str;
 		str="month;Items Sold;Revenue?";
 	
@@ -212,7 +221,15 @@ public class ReportsAdmin
 				Calendar cal1 =java.util.Calendar.getInstance();
 				cal1.setTime(date1);
 				year = cal1.get(Calendar.YEAR);
+				
+				
+				if(vect.contains(year)){
+					continue;
+				}
+				vect.add(year);
 				str=str+"----YEAR :;"+year+";----?";
+				
+				
 				while(mnth<12)
 				{
 					revenue=0;

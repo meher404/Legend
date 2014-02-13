@@ -40,7 +40,8 @@ public class DisplayPid extends HttpServlet {
 			try {
 				catID = c.generateCategoryID(category);
 				int mfgID=manufacturer.generatemanufactureID("mfgname");
-				pid=pro.GeneratePID(catID, mfgID);
+				//pid=pro.GeneratePID(catID, mfgID);
+				pid = (pname.hashCode()+"")+(catID+"")+(mfgID+"");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

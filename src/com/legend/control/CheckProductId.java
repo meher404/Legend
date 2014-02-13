@@ -45,7 +45,8 @@ public class CheckProductId extends HttpServlet {
 			try {
 				int catid=c.generateCategoryID(cname);
 				int manfid=m.generatemanufactureID(mfgname);
-				pid=p.GeneratePID(catid,manfid);
+				//pid=p.GeneratePID(catid,manfid);
+				pid = (name.hashCode()+"")+(catid+"")+(manfid+"");
 				out.println(pid);
 			} catch (SQLException e) {
 				e.printStackTrace();

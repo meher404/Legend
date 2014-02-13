@@ -199,6 +199,20 @@
         	document.getElementById('newproducts').innerHTML=responseText;         
         });
 	};
+	$(document).ready(function() {                        
+        $.get('GetAllCategory',function(responseText) { 
+        	//document.getElementById('folio-headline').innerHTML="New Products";
+        	console.log(responseText);
+        	document.getElementById('allcat').innerHTML=responseText;         
+        });
+	});
+	
+	function change(val) {
+	  console.log(val);
+	  getProductsByCategory(val);
+	  window.location='#portfolio';
+	  return false
+	};
 	</script>
     <section id="services" class="single-page scrollblock">
       <div class="container">
@@ -226,8 +240,10 @@
             <div class="align"> <a href="#portfolio"><i class="icon-mobile-1 sev_icon"></i></a></div>
             <h2>Mobile</h2>
           </div>
-          <!-- /.span3 -->
+         
         </div>
+         <br/>
+          <p>Other Categories: <select name="allcat" id="allcat" onchange="change(this.value)"></select></p>
         </div>
 		<br/>
 		

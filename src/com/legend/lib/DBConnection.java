@@ -6,11 +6,23 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
 public class DBConnection {
-	private Connection con;
-	DBConnection(){
+	private static Connection con;
+	public DBConnection(){
 	con= null;
 	}
+	
+	public void closeConnection(){
+		if(con!=null)
+			try {
+				System.out.println("con closed");
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	}
+	
 	public Connection getConnection(){
+		if(con==null){
 		try {
 			Properties pro=new Properties();			
 			FileInputStream fi = null;
@@ -44,11 +56,15 @@ public class DBConnection {
 			String password=pro.getProperty("password");
 			//System.out.println(password);
 			con = DriverManager.getConnection(url,user,password);
-			//System.out.println("Connection Established....");
-		} catch(SQLException sqlEx) {
-			sqlEx.printStackTrace();
+			System.out.println("Connection Established....");
+			} catch(SQLException sqlEx) {
+				sqlEx.printStackTrace();
+			}
+			return con;
 		}
-		return con;
+		else{
+			return con;
+		}
 	}	
 	public static void main(String[] args){
 		DBConnection db=new DBConnection();

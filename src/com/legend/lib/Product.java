@@ -133,7 +133,7 @@ public class Product {
 		c.setCategoryName(name);
 		c.setCategoryID(categoryID);
 
-		con.close();
+		//con.close();
 		return c;
 	}
 
@@ -157,7 +157,7 @@ public class Product {
 		m.setManfDescription(desc);
 		m.setManufactureID(ManufactureID);
 		m.setManufacturerName(name);
-		con.close();
+		//con.close();
 		return m;
 
 	}
@@ -228,9 +228,9 @@ public class Product {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			con.close();
+			//con.close();
 		} 
-		con.close();
+		//con.close();
 	}
 
 	void deleteDB() throws SQLException
@@ -245,9 +245,9 @@ public class Product {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			con.close();
+			//con.close();
 		}
-		con.close();
+		//con.close();
 	}
 
 

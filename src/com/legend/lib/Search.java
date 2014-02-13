@@ -36,7 +36,7 @@ public class Search {
 
 			//****************** Searching Products for key******************//		
 
-			rs=st.executeQuery("select * from product and status='active' ;");
+			rs=st.executeQuery("select * from product where status='active' ;");
 			while(rs.next())
 			{
 				String pname=rs.getString("name");
@@ -130,7 +130,7 @@ public class Search {
 				{
 					//System.out.println("loop");
 					st1=con.createStatement();
-					rs1=st1.executeQuery("select * from product where manufactureid='"+mfgid+"';");
+					rs1=st1.executeQuery("select * from product where manufactureid='"+mfgid+"' and status='active';");
 					while(rs1.next())
 					{
 						//System.out.println("product");
@@ -157,11 +157,7 @@ public class Search {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		try {
-			con.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		
 		return array;
 	}
 }

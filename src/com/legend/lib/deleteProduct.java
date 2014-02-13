@@ -39,7 +39,7 @@ public class deleteProduct {
 			
 			st = con.createStatement();
 			
-			int i=st.executeUpdate("delete from cart where userid='"+uid+"' and PID='"+pid+"';" );
+			int i=st.executeUpdate("delete from cart where userid='"+uid+"' and PID='"+pid+"' ;" );
 			System.out.println(i);
 		} catch (SQLException e) {
 			e.printStackTrace();

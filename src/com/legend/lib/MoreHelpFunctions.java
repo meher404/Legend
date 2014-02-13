@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MoreHelpFunctions {
@@ -117,6 +118,26 @@ public class MoreHelpFunctions {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public ArrayList<String> getCategories(){
+		ArrayList<String> categories=new ArrayList<String>();
+		try {
+			db=new DBConnection();
+			con=db.getConnection();
+			st = con.createStatement();
+
+			rs=st.executeQuery("select categoryname from category");
+			while(rs.next()){
+				String catName=rs.getString("categoryname");
+				String html = "<option name='cat' id='cat' value='"+catName+"' >"+catName+"</option>";
+				if(categories.contains(catName)) continue;
+				categories.add(html);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return categories;
 	}
 	
 }
