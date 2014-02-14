@@ -348,7 +348,7 @@
         <div class="align"><i class="icon-group-circled"></i></div>
        
 		<h1 id="register_title">Register</h1>
-		<div align="right"><strong><b><a id="member" onclick="registerToSignIn()" >Already a Member? Sign In</a></b></strong></div>
+		<div align="right"><strong><b><div id="forgotpwd" style="display:none"><a id="forgot" onclick="forgotpwd()" >Forgot Password?</a></div><a id="member" onclick="registerToSignIn()" >Already a Member? Sign In</a></b></strong></div>
         <div class="row">
           <div class="span12"> 
             <div class="cform" id="theme-form">
@@ -498,6 +498,7 @@
 		if(check_sign==true){
 			document.getElementById('register-form').innerHTML="";
 			document.getElementById('pd').innerHTML="";
+			document.getElementById('forgotpwd').style.display='';
 			document.getElementById('register_title').innerHTML="Login";
 			var inhtml = "<div class=\"row\"><div class=\"span4\"> <span class=\"your-email\"><input onchange=\"checkEmailLogin()\" onkeyup=\"checkEmailLogin()\" type=\"text\" id=\"your-email123\" name=\"your-email\" placeholder=\"Your Email\" class=\"cform-text\" size=\"40\" title=\"your email\"  data-validation=\"email\">"+
                     "</span><div id='valid_email'> </div> </div>"+
@@ -517,6 +518,30 @@
 				location.reload();
 				check_sign=true;
 			}
+		};
+		
+		function forgotpwd(){
+			//if(check_sign==true){
+			document.getElementById('register-form').innerHTML="";
+			document.getElementById('pd').innerHTML="";
+			document.getElementById('forgotpwd').style.display='none';
+			document.getElementById('register_title').innerHTML="Login";
+			var inhtml = "<div class=\"row\"><div class=\"span4\">Enter Your Email ID: </div>"+
+				  "<div class=\"span4\"> <span class=\"your-email\"><input onchange=\"checkEmailLogin()\" onkeyup=\"checkEmailLogin()\" type=\"text\" id=\"your-email123\" name=\"your-email\" placeholder=\"Your Email\" class=\"cform-text\" size=\"40\" title=\"your email\"  data-validation=\"email\">"+
+                    "</span><div id='valid_email'> </div> </div>"+
+					"<div class=\"span4\"> <span class=\"your-name\">"+
+                    "<input type=\"submit\" value=\"Send Password\" id=\"login-submit\" name=\"login-submit\" class=\"cform-submit\"></span> </div></div>";
+			document.getElementById('register-form').innerHTML = inhtml;
+			document.getElementById('register-form').action="ForgotPasswordServlet";
+			
+			document.getElementById('member').innerHTML="New User? Register";
+			//check_sign=false;
+			//}
+			//else{
+				//location.reload();
+				//check_sign=true;
+			//}
+			
 		};
 	</script>
 

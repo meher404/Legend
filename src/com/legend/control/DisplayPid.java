@@ -30,6 +30,8 @@ public class DisplayPid extends HttpServlet {
 		Manufacturer manufacturer=new Manufacturer();
 		helpFunctions help=new helpFunctions();
 		response.setContentType("text/html");
+		response.setHeader("Pragma", "cache");
+		response.setHeader("Cache-Control", "private, must-revalidate");
 		String pname=request.getParameter("pname");
 		String mfgname=request.getParameter("mfgname");
 		String category=request.getParameter("category");

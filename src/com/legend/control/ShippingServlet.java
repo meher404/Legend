@@ -30,6 +30,8 @@ public class ShippingServlet extends HttpServlet {
 		Shipping ship=new Shipping();
 		MoreHelpFunctions help=new MoreHelpFunctions();
 		response.setContentType("text/html");
+		response.setHeader("Pragma", "cache");
+		response.setHeader("Cache-Control", "private, must-revalidate");
 		int addId;
 		HttpSession session=request.getSession();
 		User user=(User) session.getAttribute("user");

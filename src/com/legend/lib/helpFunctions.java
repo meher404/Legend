@@ -247,6 +247,7 @@ public class helpFunctions {
 			}
 			else if(!existing)
 			{
+				System.out.println("price:"+price);
 				price1=Double.parseDouble(price);
 				discount1=Double.parseDouble(discount);
 				quantity1=Integer.parseInt(quantity);

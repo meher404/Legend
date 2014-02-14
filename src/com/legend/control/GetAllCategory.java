@@ -32,6 +32,8 @@ public class GetAllCategory extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
+		response.setHeader("Pragma", "cache");
+		response.setHeader("Cache-Control", "private, must-revalidate");
 		PrintWriter out = response.getWriter();
 		MoreHelpFunctions mhf = new MoreHelpFunctions();
 		ArrayList<String> options = mhf.getCategories();

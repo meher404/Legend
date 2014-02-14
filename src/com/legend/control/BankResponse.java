@@ -33,6 +33,8 @@ public class BankResponse extends HttpServlet {
 		
 		OrderDetails order=new OrderDetails();
 		response.setContentType("text/html");
+		response.setHeader("Pragma", "cache");
+		response.setHeader("Cache-Control", "private, must-revalidate");
 		MoreHelpFunctions help=new MoreHelpFunctions();
 		HttpSession ss= request.getSession();
 		User user=(User) ss.getAttribute("user");

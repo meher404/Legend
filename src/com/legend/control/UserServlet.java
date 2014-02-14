@@ -39,6 +39,8 @@ public class UserServlet extends HttpServlet {
 		UserObject userObj=new UserObject();
 		//PrintWriter out=response.getWriter();
 		response.setContentType("text/html");
+		response.setHeader("Pragma", "cache");
+		response.setHeader("Cache-Control", "private, must-revalidate");
 		String email=(String)request.getSession().getAttribute("email");
 		User user=new User();
 		user=userObj.userObject(email);

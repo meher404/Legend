@@ -45,6 +45,18 @@
           $(document).ready(function(){
             $("a[rel^='prettyPhoto']").prettyPhoto();
           });
+          
+          $(document).ready(function(){
+              var url='CheckAdminPermission';
+              $.get(url,function(resp){
+            	  console.log("admin check: "+resp);
+            	 if((resp=="")==true){
+            		 window.location.href='index.html';
+            	 } 
+              });
+            });
+          
+          
 		function unHide(val){
 			document.getElementById("regDiv").style.display = "";
 			document.getElementById('category').value="";

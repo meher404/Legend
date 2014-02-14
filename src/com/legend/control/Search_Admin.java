@@ -24,6 +24,8 @@ public class Search_Admin extends HttpServlet {
 	{
 		PrintWriter out=response.getWriter();
 		response.setContentType("text/html");
+		response.setHeader("Pragma", "cache");
+		response.setHeader("Cache-Control", "private, must-revalidate");
 		String key=request.getParameter("searchproduct");
 		Search search=new Search();
 		ArrayList<Product> array=new ArrayList<Product>();

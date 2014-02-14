@@ -49,14 +49,14 @@ public class AddOrUpdateProduct extends HttpServlet {
 			response.setHeader("Pragma", "cache");
 			response.setHeader("Cache-Control", "private, must-revalidate");
 			DiskFileItemFactory factory = new DiskFileItemFactory();
-			int maxMemSize = 40000*100;
+			int maxMemSize = 40000*1000;
 			// maximum size that will be stored in memory
 			factory.setSizeThreshold(maxMemSize);
 			// Location to save data that is larger than maxMemSize.
 
 			// Create a new file upload handler
 			ServletFileUpload upload = new ServletFileUpload(factory);
-			long maxFileSize = 4000*100;
+			long maxFileSize = 4000*1000;
 			// maximum file size to be uploaded.
 			upload.setSizeMax(maxFileSize );
 		
@@ -112,18 +112,18 @@ public class AddOrUpdateProduct extends HttpServlet {
 					category = category.toLowerCase();
 					
 					fileSavePath = request.getServletContext().getRealPath("");
-					fileSavePath =fileSavePath+"/img/products/"+category+"/"; //+  File.separator;
-					path="img/products/"+category+"/"+fileName;
+					fileSavePath =fileSavePath+"\\img\\products\\"+category+"\\"; //+  File.separator;
+					path="img\\products\\"+category+"\\"+fileName;
 					System.out.println(path);
-					File file = new File(fileSavePath+"/img/products/"+category);
+					/*File file = new File(fileSavePath+"\\img\\products\\"+category);
 					if(!file.exists()){
 						if(file.mkdir()){
 							System.out.println("New Dir "+category+" created.");
 						}
 						else{
-							System.out.println("Fialed to create: "+category);
+							System.out.println("Failed to create: "+category);
 						}
-					}
+					}*/
 					
 					//String realPath="/images/";
 					// String fileSavePath=getServletContext().getRealPath(realPath);

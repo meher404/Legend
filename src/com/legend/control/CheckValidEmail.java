@@ -22,6 +22,8 @@ public class CheckValidEmail extends HttpServlet {
 	@SuppressWarnings("static-access")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
+		response.setHeader("Pragma", "cache");
+		response.setHeader("Cache-Control", "private, must-revalidate");
 		helpFunctions help=new helpFunctions();
 		PrintWriter out=response.getWriter();
 		String email=request.getParameter("email");

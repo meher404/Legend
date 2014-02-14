@@ -27,6 +27,8 @@ public class getNewProducts extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out=response.getWriter();
 		response.setContentType("text/html");
+		response.setHeader("Pragma", "cache");
+		response.setHeader("Cache-Control", "private, must-revalidate");
 		helpFunctions help=new helpFunctions();
 		ArrayList<Product> array=new ArrayList<Product>();
 		array=help.getNewProducts();

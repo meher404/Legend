@@ -27,6 +27,8 @@ public class Activate extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
+		response.setHeader("Pragma", "cache");
+		response.setHeader("Cache-Control", "private, must-revalidate");
 		Registration reg=new Registration();
 		PrintWriter out=response.getWriter();
 		String code=request.getParameter("verfCode"); 

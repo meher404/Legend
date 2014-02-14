@@ -25,6 +25,8 @@ public class deleteProductAdmin extends HttpServlet {
 		deleteProduct delete=new deleteProduct(); 
 		System.out.println("delete servlet");
 		response.setContentType("text/html");
+		response.setHeader("Pragma", "cache");
+		response.setHeader("Cache-Control", "private, must-revalidate");
 		String pid=request.getParameter("pid");
 		delete.deleteProductAdmin(pid);
 		out.println("admin_home.html");

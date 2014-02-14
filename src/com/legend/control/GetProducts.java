@@ -36,6 +36,8 @@ public class GetProducts extends HttpServlet {
 		HttpSession session = request.getSession();
 		User u = (User) session.getAttribute("user");
 		response.setContentType("text/html");
+		response.setHeader("Pragma", "cache");
+		response.setHeader("Cache-Control", "private, must-revalidate");
 		PrintWriter out = response.getWriter();
 		HashMap<Product, Integer> map = u.cart;
 	

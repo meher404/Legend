@@ -28,6 +28,8 @@ public class deleteFromCart extends HttpServlet {
 		PrintWriter out=response.getWriter();
 		deleteProduct delete=new deleteProduct(); 
 		response.setContentType("text/html");
+		response.setHeader("Pragma", "cache");
+		response.setHeader("Cache-Control", "private, must-revalidate");
 		String pid=request.getParameter("PID");
 		
 		User u = (User)request.getSession().getAttribute("user");

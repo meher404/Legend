@@ -23,9 +23,17 @@ public class ChangePassword extends HttpServlet {
   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
+		
+	
+	}
+
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out=response.getWriter();
 		ForgotPassword pass=new ForgotPassword();
 		response.setContentType("text/html");
+		response.setHeader("Pragma", "cache");
+		response.setHeader("Cache-Control", "private, must-revalidate");
 		String password=request.getParameter("password"); 
 		HttpSession session=request.getSession();
 		String email=(String) session.getAttribute("email");
@@ -40,12 +48,6 @@ public class ChangePassword extends HttpServlet {
 	    out.println("registerToSignIn();");
 	    out.println("</script>");
 	    out.println("</body></html>");
-	
-	}
-
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }

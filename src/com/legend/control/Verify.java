@@ -21,12 +21,19 @@ public class Verify extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	}
+
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
+		response.setHeader("Pragma", "cache");
+		response.setHeader("Cache-Control", "private, must-revalidate");
 		ForgotPassword pass=new ForgotPassword();
 		PrintWriter out=response.getWriter();
 		String code=request.getParameter("verfCode"); 
 		HttpSession session=request.getSession();
-		String email=(String) session.getAttribute("email");
+		String email=(String) session.getAttribute("forgotemail");
 		System.out.println("email  :"+email);
 		if(pass.verify(email, code)){
 			RequestDispatcher rd=request.getRequestDispatcher("NewPassword.html");
@@ -35,12 +42,8 @@ public class Verify extends HttpServlet {
 		else{
 			RequestDispatcher rd=request.getRequestDispatcher("VerifyCode.html");
 			rd.include(request, response);
+			out.println("<script>Invalid verification code</script>");
 		}
-	}
-
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }
